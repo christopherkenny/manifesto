@@ -13,16 +13,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-# newr
+# manifesto
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of newr is to ...
+The goal of manifesto is to ...
 
 ## Installation
 
-You can install the development version of newr like so:
+You can install the development version of manifesto like so:
 
 ``` r
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
@@ -33,7 +33,7 @@ You can install the development version of newr like so:
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(newr)
+library(manifesto)
 ## basic example code
 ```
 

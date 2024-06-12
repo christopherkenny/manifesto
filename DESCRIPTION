@@ -1,4 +1,4 @@
-Package: newr
+Package: manifesto
 Title: Set Up New R Installations
 Version: 0.0.0.9000
 Authors@R: 
@@ -13,5 +13,5 @@ Imports:
     pak,
     rstudioapi,
     yaml
-URL: https://github.com/christopherkenny/newr
-BugReports: https://github.com/christopherkenny/newr/issues
+URL: https://github.com/christopherkenny/manifesto
+BugReports: https://github.com/christopherkenny/manifesto/issues
