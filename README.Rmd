@@ -7,9 +7,9 @@ output: github_document
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = '#>',
+  fig.path = 'man/figures/README-',
+  out.width = '100%'
 )
 ```
 
@@ -18,7 +18,43 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of manifesto is to ...
+**manifesto** provides a lightweight, portable way to declare R project environments using a simple `r`project.toml` file.  
+It makes setting up and sharing reproducible R projects faster and more reliable.
+
+---
+
+## What is manifesto?
+
+**manifesto** introduces a clear, TOML-based manifest format for R projects.  
+It captures:
+
+- Project metadata (name, version, description, authors)
+- Required R version
+- Package dependencies, with version constraints
+- Package sources (CRAN, Bioconductor, GitHub, GitLab, Git, or custom URLs)
+- Optional dependency groups (development, workshop, full install)
+- System dependencies (OS libraries)
+- Install preferences (such as binary vs source installs)
+
+The goal is to simplify project setup across local machines, teams, and workshops, without locking users into heavyweight tools.
+
+---
+
+## Minimal Example
+
+The smallest valid `rproject.toml` looks like this:
+
+```toml
+[project]
+name = "MyAnalysis"
+version = "0.1.0"
+
+[environment]
+r_version = ">= 4.2.0"
+
+[dependencies]
+dplyr = ">= 1.0.0"
+```
 
 ## Installation
 
@@ -35,21 +71,5 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(manifesto)
-## basic example code
+install_manifest()
 ```
-
-## Default Categories
-
-### Data Science
-
-- `tidyverse`
-
-### Spatial Data
-
-- [`sf`](https://r-spatial.github.io/sf/)
-
-### API Wrappers
-
-- [`httr2`]()
-- [`jsonlite`]()
-
