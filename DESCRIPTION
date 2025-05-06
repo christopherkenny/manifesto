@@ -7,7 +7,11 @@ Authors@R:
            role = c("aut", "cre"),
            email = "christopherkenny@fas.harvard.edu",
            comment = c(ORCID = "0000-0002-9386-6860"))
-Description: What the package does (one paragraph).
+Description: Provides 'TOML' representations of packages
+    needed that must be installed to run a project. Includes
+    functions to specify detailed installation functions,
+    validate files, and to use a given file as the requirements
+    for a project.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
