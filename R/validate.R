@@ -4,7 +4,6 @@
 #' @param groups Optional character vector of dependency groups to include.
 #' 
 #' @return Invisibly returns `TRUE` if the manifest is valid; otherwise, stops with an error.
-#' 
 #' @export
 #'
 #' @examples
