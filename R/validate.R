@@ -1,9 +1,14 @@
-#' Validate the rproject.toml manifest file
+#' Validate manifest files
 #'
 #' @param path Path to the `rproject.toml` file.
 #' @param groups Optional character vector of dependency groups to include.
-#' @return Invisibly returns TRUE if the manifest is valid; otherwise, stops with an error.
+#' 
+#' @return Invisibly returns `TRUE` if the manifest is valid; otherwise, stops with an error.
+#' 
 #' @export
+#'
+#' @examples
+#' #TODO validate the minimal file included
 validate_manifest <- function(path = 'rproject.toml', groups = NULL) {
   if (!file.exists(path)) {
     cli::cli_abort('The file {.file {path}} does not exist.')
