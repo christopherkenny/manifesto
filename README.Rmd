@@ -47,10 +47,10 @@ The smallest valid `rproject.toml` looks like this:
 ```toml
 [project]
 name = "MyAnalysis"
-version = "0.1.0"
+version = "0.0.1"
 
 [environment]
-r_version = ">= 4.2.0"
+r_version = ">= 4.4.2"
 
 [dependencies]
 dplyr = ">= 1.0.0"
@@ -67,9 +67,12 @@ pak::pak('christopherkenny/manifesto')
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+For most users, you will only need to use the `install_manifest()` function.
+This handles organizing and installing packages dound in the manifest file.
+By default, this file is called `rproject.toml`.
 
 ```{r example}
 library(manifesto)
 install_manifest()
 ```
+
