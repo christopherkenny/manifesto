@@ -6,7 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of manifesto is to …
+`manifesto` provides a way to share details of needed packages.
+It is aimed at ensuring the right sets of packages are installed for users and workshops.
 
 ## Installation
 
