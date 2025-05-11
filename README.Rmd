@@ -23,6 +23,7 @@ It makes setting up and sharing reproducible R projects faster and more reliable
 As it is lightweight, it can also be used easily for setting up new R installations or for workshops which require packages.
 
 Unlike most reproducibility-ish packages, this is not focused on being able to run code under a completely specified environment.
+It is aimed at ensuring the right sets of packages are installed for users and workshops.
 
 ---
 
