@@ -1,13 +1,59 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# manifesto <img src="man/figures/logo.png" align="right" height="108" alt="" />
+# `manifesto` <img src="man/figures/logo.png" align="right" height="108" alt="" />
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-`manifesto` provides a way to share details of needed packages.
-It is aimed at ensuring the right sets of packages are installed for users and workshops.
+`manifesto` provides a lightweight, portable way to declare R project
+environments using a simple `rproject.toml` file.  
+It makes setting up and sharing reproducible R projects faster and more
+reliable. As it is lightweight, it can also be used easily for setting
+up new R installations or for workshops which require packages.
+
+Unlike most reproducibility-ish packages, this is not focused on being
+able to run code under a completely specified environment. It is aimed
+at ensuring the right sets of packages are installed for users and
+workshops.
+
+------------------------------------------------------------------------
+
+## What is manifesto?
+
+**manifesto** introduces a clear, TOML-based manifest format for R
+projects.  
+It captures:
+
+- Project metadata (name, version, description, authors)
+- Required R version
+- Package dependencies, with version constraints
+- Package sources (CRAN, Bioconductor, GitHub, GitLab, Git, or custom
+  URLs)
+- Optional dependency groups (development, workshop, full install)
+- System dependencies (OS libraries)
+- Install preferences (such as binary vs source installs)
+
+The goal is to simplify project setup across local machines, teams, and
+workshops, without locking users into heavyweight tools.
+
+------------------------------------------------------------------------
+
+## Minimal Example
+
+The smallest valid `rproject.toml` looks like this:
+
+``` toml
+[project]
+name = "MyAnalysis"
+version = "0.0.1"
+
+[environment]
+r_version = ">= 4.4.2"
+
+[dependencies]
+dplyr = ">= 1.0.0"
+```
 
 ## Installation
 
@@ -20,24 +66,11 @@ pak::pak('christopherkenny/manifesto')
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+For most users, you will only need to use the `install_manifest()`
+function. This handles organizing and installing packages dound in the
+manifest file. By default, this file is called `rproject.toml`.
 
 ``` r
 library(manifesto)
-## basic example code
+#install_manifest()
 ```
-
-## Default Categories
-
-### Data Science
-
-- `tidyverse`
-
-### Spatial Data
-
-- [`sf`](https://r-spatial.github.io/sf/)
-
-### API Wrappers
-
-- [`httr2`]()
-- [`jsonlite`]()
