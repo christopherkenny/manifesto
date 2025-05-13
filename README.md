@@ -19,10 +19,10 @@ workshops.
 
 ------------------------------------------------------------------------
 
-## What is manifesto?
+## What is `manifesto`?
 
-**manifesto** introduces a clear, TOML-based manifest format for R
-projects.  
+`manifesto` introduces a human-readable, TOML-based manifest format for
+R projects.  
 It captures:
 
 - Project metadata (name, version, description, authors)
@@ -57,7 +57,7 @@ dplyr = ">= 1.0.0"
 
 ## Installation
 
-You can install the development version of manifesto like so:
+You can install the development version of `manifesto` like so:
 
 ``` r
 # install.packages('pak')
