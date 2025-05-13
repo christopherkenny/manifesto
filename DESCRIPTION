@@ -1,5 +1,5 @@
 Package: manifesto
-Title: Create Package Manifest Files
+Title: Create Project Manifest Files
 Version: 0.0.1
 Authors@R:
     person(given = "Christopher T.",
