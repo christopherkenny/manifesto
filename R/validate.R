@@ -1,13 +1,13 @@
-#' Validate manifest files
+#' Validate the rproject.toml manifest file
 #'
 #' @param path Path to the `rproject.toml` file.
 #' @param groups Optional character vector of dependency groups to include.
-#' 
+#'
 #' @return Invisibly returns `TRUE` if the manifest is valid; otherwise, stops with an error.
 #' @export
 #'
 #' @examples
-#' #TODO validate the minimal file included
+#' # TODO validate the minimal file included
 validate_manifest <- function(path = 'rproject.toml', groups = NULL) {
   if (!file.exists(path)) {
     cli::cli_abort('The file {.file {path}} does not exist.')
@@ -16,7 +16,27 @@ validate_manifest <- function(path = 'rproject.toml', groups = NULL) {
   manifest <- tomledit::read_toml(path)
   cli::cli_h2('Validating manifest at {path}')
 
-  # Define allowed sources
+  # ---- Manifest version check ----
+  expected_major <- '0'
+  if (is.null(manifest$manifesto$version)) {
+    cli::cli_abort('Missing {.field [manifesto].version} field in the manifest.')
+  }
+
+  version_string <- manifest$manifesto$version
+  if (!grepl('^\\d+\\.\\d+\\.\\d+$', version_string)) {
+    cli::cli_abort('Invalid manifesto version format: {.val {version_string}}')
+  }
+
+  manifest_major <- strsplit(version_string, '\\.')[[1]][1]
+  if (manifest_major != expected_major) {
+    cli::cli_abort(c(
+      'Incompatible manifest version.',
+      'x' = 'This version of the {.pkg manifesto} package supports major version {expected_major}.',
+      'v' = 'The manifest declares version {version_string}.'
+    ))
+  }
+
+  # ---- Dependency validation ----
   allowed_sources <- c('CRAN', 'bioc', 'github', 'gitlab', 'git', 'url')
 
   # Helper function to validate a single dependency entry
