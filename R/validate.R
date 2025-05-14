@@ -41,34 +41,43 @@ validate_manifest <- function(path = 'rproject.toml', groups = NULL) {
 
   # Helper function to validate a single dependency entry
   validate_entry <- function(pkg, entry) {
+    # Version-only entry (e.g., dplyr = ">= 1.0.0")
     if (is.character(entry)) {
-      # Simple version constraint
-      if (!grepl('^(>=|<=|==|>|<)?\\s*\\d+(\\.\\d+)*$', entry)) {
-        cli::cli_abort('Invalid version constraint for package {.strong {pkg}}: {.val {entry}}')
-      }
-    } else if (is.list(entry)) {
-      source <- entry$source %||% 'CRAN'
-      version <- entry$version
-      repo <- entry$repo
-      ref <- entry$ref
+      return(invisible())
+    }
 
-      if (!(source %in% allowed_sources)) {
-        cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
-      }
+    # Structured entry
+    source <- entry$source %||% 'CRAN'
+    version <- entry$version %||% NA_character_
+    repo <- entry$repo %||% NA_character_
+    ref <- entry$ref %||% NA_character_
+    url <- entry$url %||% NA_character_
 
-      if (!is.null(version) && !grepl('^(>=|<=|==|>|<)?\\s*\\d+(\\.\\d+)*$', version)) {
-        cli::cli_abort('Invalid version constraint for package {.strong {pkg}}: {.val {version}}')
-      }
+    # Check source
+    if (!source %in% allowed_sources) {
+      cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
+    }
 
-      if (source == 'github' && is.null(repo)) {
-        cli::cli_abort("Missing 'repo' field for GitHub package {.strong {pkg}}.")
-      }
+    # Warn for missing repo when likely needed
+    if (source %in% c('github', 'gitlab') && is.na(repo)) {
+      cli::cli_warn('Package {.strong {pkg}} from {.val {source}} is missing a {.field repo} field.')
+    }
 
-      if (source %in% c('gitlab', 'git', 'url') && is.null(repo)) {
-        cli::cli_abort("Missing 'repo' field for {.val {source}} package {.strong {pkg}}.")
-      }
-    } else {
-      cli::cli_abort('Invalid entry format for package {.strong {pkg}}.')
+    if (source == 'git' && is.na(url)) {
+      cli::cli_warn('Package {.strong {pkg}} from {.val git} is missing a {.field url} field.')
+    }
+
+    if (source == 'url' && is.na(url)) {
+      cli::cli_warn('Package {.strong {pkg}} from {.val url} is missing a {.field url} field.')
+    }
+
+    if (source == 'local' && is.na(entry$path)) {
+      cli::cli_warn('Package {.strong {pkg}} from {.val local} is missing a {.field path} field.')
+    }
+
+    # Soft version check — we accept almost anything that pak accepts
+    if (!is.na(version) && !grepl('^([><=]+\\s*)?\\d+(\\.\\d+)*$', version)) {
+      cli::cli_warn('Version constraint for package {.strong {pkg}} looks unusual: {.val {version}}')
     }
   }
 

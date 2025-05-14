@@ -76,5 +76,5 @@ manifest file. By default, this file is called `rproject.toml`.
 
 ``` r
 library(manifesto)
-#install_manifest()
+# install_manifest()
 ```

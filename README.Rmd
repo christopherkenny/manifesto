@@ -80,6 +80,6 @@ By default, this file is called `rproject.toml`.
 
 ```{r example}
 library(manifesto)
-#install_manifest()
+# install_manifest()
 ```
 

@@ -4,12 +4,14 @@
 \alias{install_manifest}
 \title{Install packages from a rproject.toml manifest}
 \usage{
-install_manifest(path = "rproject.toml", groups = NULL)
+install_manifest(path = "rproject.toml", groups = NULL, dry_run = FALSE)
 }
 \arguments{
 \item{path}{Path to the \code{rproject.toml} file. Defaults to "rproject.toml" in the current directory.}
 
 \item{groups}{Optional character vector of dependency groups to include (e.g., "dev", "workshop").}
+
+\item{dry_run}{If \code{TRUE}, show what would be installed but do not install anything.}
 }
 \value{
 Invisibly returns a character vector of package references that were installed.
