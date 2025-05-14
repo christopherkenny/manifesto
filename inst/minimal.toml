@@ -2,6 +2,9 @@
 name = "MinimalManifest"
 version = "0.0.1"
 
+[manifesto]
+version = "0.1.0"
+
 [environment]
 r_version = ">= 4.5.0"
 

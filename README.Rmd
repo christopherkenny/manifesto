@@ -53,6 +53,9 @@ The smallest valid `rproject.toml` looks like this:
 name = "MyAnalysis"
 version = "0.0.1"
 
+[manifesto]
+version = "0.1.0"
+
 [environment]
 r_version = ">= 4.4.2"
 

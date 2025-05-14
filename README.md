@@ -4,6 +4,7 @@
 # `manifesto` <img src="man/figures/logo.png" align="right" height="108" alt="" />
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 `manifesto` provides a lightweight, portable way to declare R project
@@ -47,6 +48,9 @@ The smallest valid `rproject.toml` looks like this:
 [project]
 name = "MyAnalysis"
 version = "0.0.1"
+
+[manifesto]
+version = "0.1.0"
 
 [environment]
 r_version = ">= 4.4.2"
