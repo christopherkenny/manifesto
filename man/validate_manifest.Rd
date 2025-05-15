@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate.R
 \name{validate_manifest}
 \alias{validate_manifest}
-\title{Validate the rproject.toml manifest file}
+\title{Validate a manifesto manifest file}
 \usage{
 validate_manifest(path = "rproject.toml", groups = NULL)
 }
@@ -15,7 +15,7 @@ validate_manifest(path = "rproject.toml", groups = NULL)
 Invisibly returns \code{TRUE} if the manifest is valid; otherwise, stops with an error.
 }
 \description{
-Validate the rproject.toml manifest file
+Validate a manifesto manifest file
 }
 \examples{
 validate_manifest(path = system.file(package = 'manifesto', 'minimal.toml'))

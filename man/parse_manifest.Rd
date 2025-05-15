@@ -2,7 +2,7 @@
 % Please edit documentation in R/parse.R
 \name{parse_manifest}
 \alias{parse_manifest}
-\title{Parse a manifesto rproject.toml manifest file}
+\title{Parse a manifesto manifest file}
 \usage{
 parse_manifest(path = "rproject.toml", groups = NULL)
 }

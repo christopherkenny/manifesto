@@ -1,4 +1,4 @@
-#' Validate the rproject.toml manifest file
+#' Validate a manifesto manifest file
 #'
 #' @param path Path to the `rproject.toml` file.
 #' @param groups Optional character vector of dependency groups to include.

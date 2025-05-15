@@ -1,4 +1,4 @@
-#' Parse a manifesto rproject.toml manifest file
+#' Parse a manifesto manifest file
 #'
 #' By default, `groups = NULL`, which will only install core dependencies.
 #' If you want to include all optional groups, set `groups = 'all'`.

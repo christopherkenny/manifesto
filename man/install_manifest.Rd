@@ -2,7 +2,7 @@
 % Please edit documentation in R/install.R
 \name{install_manifest}
 \alias{install_manifest}
-\title{Install packages from a rproject.toml manifest}
+\title{Install packages from a manifesto manifest}
 \usage{
 install_manifest(path = "rproject.toml", groups = NULL, dry_run = FALSE)
 }
@@ -17,7 +17,7 @@ install_manifest(path = "rproject.toml", groups = NULL, dry_run = FALSE)
 Invisibly returns a character vector of package references that were installed.
 }
 \description{
-Install packages from a rproject.toml manifest
+Install packages from a manifesto manifest
 }
 \examples{
 install_manifest(

@@ -1,0 +1,27 @@
+[manifesto]
+version = "0.0.1"
+
+[project]
+name = "complicated-demo"
+version = "0.9.1"
+
+[environment]
+r_version = ">= 4.2.0"
+
+[dependencies]
+dplyr = ">= 1.0.10"
+BiocManager = { source = "bioc", version = ">= 1.30.10" }
+readr = "2.1.4"
+
+[dev-dependencies]
+testthat = "3.2.0"
+lintr = { version = "3.0.2", source = "CRAN" }
+devtools = { source = "github", repo = "r-lib/devtools", ref = "v2.4.5" }
+
+[workshop-dependencies]
+terra = { version = "1.7-18", source = "CRAN" }
+gganimate = { source = "github", repo = "thomasp85/gganimate" }
+
+[ci-dependencies]
+pkgdown = { source = "github", repo = "r-lib/pkgdown", ref = "v2.0.7" }
+covr = "3.6.2"

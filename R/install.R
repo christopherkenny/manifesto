@@ -1,4 +1,4 @@
-#' Install packages from a rproject.toml manifest
+#' Install packages from a manifesto manifest
 #'
 #' @param path Path to the `rproject.toml` file. Defaults to "rproject.toml" in the current directory.
 #' @param groups Optional character vector of dependency groups to include (e.g., "dev", "workshop").
