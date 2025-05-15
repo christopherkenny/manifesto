@@ -18,5 +18,5 @@ Invisibly returns \code{TRUE} if the manifest is valid; otherwise, stops with an
 Validate the rproject.toml manifest file
 }
 \examples{
-# TODO validate the minimal file included
+validate_manifest(path = system.file(package = 'manifesto', 'minimal.toml'))
 }

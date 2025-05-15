@@ -20,5 +20,8 @@ Invisibly returns a character vector of package references that were installed.
 Install packages from a rproject.toml manifest
 }
 \examples{
-# TODO
+install_manifest(
+  path = system.file(package = 'manifesto', 'minimal.toml'),
+  dry_run = TRUE
+)
 }

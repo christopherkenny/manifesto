@@ -1,5 +1,8 @@
 #' Parse a manifesto rproject.toml manifest file
 #'
+#' By default, `groups = NULL`, which will only install core dependencies.
+#' If you want to include all optional groups, set `groups = 'all'`.
+#'
 #' @param path Path to the `rproject.toml` file.
 #' @param groups Optional character vector of dependency groups to include.
 #'
@@ -7,71 +10,110 @@
 #' @export
 #'
 #' @examples
-#' # TODO
+#' parse_manifest(path = system.file(package = 'manifesto', 'minimal.toml'))
 parse_manifest <- function(path = 'rproject.toml', groups = NULL) {
   if (!file.exists(path)) {
     cli::cli_abort('The file {.file {path}} does not exist.')
   }
 
-  manifest <- tomledit::read_toml(path)
+  manifest <- tomledit::read_toml(path) |>
+    tomledit::from_toml()
 
-  cli::cli_h2('Parsing manifest at {path}')
+  # Always include core dependencies
+  all_refs <- collect_deps(manifest, section = 'dependencies')
+
+  # Include any optional groups
+  if (!is.null(groups)) {
+    if (length(groups) == 1 && groups == 'all') {
+      groups <- all_groups(path)
+    }
+    for (group in groups) {
+      section <- paste0(group, '-dependencies')
+      if (!is.null(manifest[[section]])) {
+        cli::cli_alert_info('Including {.strong {group}} group')
+        group_refs <- collect_deps(manifest, section)
+        all_refs <- c(all_refs, group_refs)
+      } else {
+        cli::cli_warn('Group {.strong {group}} not found in the manifest.')
+      }
+    }
+  }
+
+  unname(all_refs)
+}
+
+collect_deps <- function(manifest, section) {
+  entries <- manifest[[section]]
+  if (is.null(entries)) {
+    return(list())
+  }
 
   deps <- list()
 
-  collect_deps <- function(dep_section) {
-    if (is.null(manifest[[dep_section]])) {
-      return()
-    }
+  for (pkg in names(entries)) {
+    entry <- entries[[pkg]]
 
-    for (pkg in names(manifest[[dep_section]])) {
-      entry <- manifest[[dep_section]][[pkg]]
+    if (is.character(entry)) {
+      deps[[pkg]] <- paste0(pkg, '@', entry)
+    } else if (is.list(entry)) {
+      source <- entry$source %||% 'CRAN'
+      version <- entry$version
+      repo <- entry$repo
+      ref <- entry$ref
 
-      if (is.character(entry)) {
-        deps[[pkg]] <- paste0(pkg, '@', entry)
-      } else if (is.list(entry)) {
-        source <- entry$source %||% 'CRAN'
-        version <- entry$version
-        ref <- entry$ref
-        repo <- entry$repo
-
-        if (source == 'CRAN' || source == 'bioc') {
-          if (!is.null(version)) {
-            deps[[pkg]] <- paste0(pkg, '@', version)
-          } else {
-            deps[[pkg]] <- pkg
-          }
-        } else if (source == 'github') {
-          if (is.null(repo)) {
-            cli::cli_abort('Package {.strong {pkg}} has source = github but no repo field.')
-          }
-          ref_part <- if (!is.null(ref)) paste0('@', ref) else ''
-          deps[[pkg]] <- paste0(repo, ref_part)
+      if (source %in% c('CRAN', 'bioc')) {
+        if (!is.null(version)) {
+          deps[[pkg]] <- paste0(pkg, '@', version)
         } else {
-          cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
+          deps[[pkg]] <- pkg
         }
-      }
-    }
-  }
+      } else if (source == 'github') {
+        if (is.null(repo)) {
+          cli::cli_abort('Package {.strong {pkg}} has source = github but no repo field.')
+        }
 
-  # Always start with base dependencies
-  collect_deps('dependencies')
-
-  # Then any requested groups
-  if (!is.null(groups)) {
-    for (group in groups) {
-      group_key <- paste0(group, '-dependencies')
-      if (!is.null(manifest[[group_key]])) {
-        cli::cli_alert_info('Including {.strong {group}} group')
-        collect_deps(group_key)
+        if (!is.null(ref)) {
+          deps[[pkg]] <- paste0(repo, '@', ref)
+        } else {
+          deps[[pkg]] <- repo
+        }
       } else {
-        cli::cli_alert_warning('Group {.strong {group}} not found in the manifest.')
+        cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
       }
+    } else {
+      cli::cli_warn('Skipping invalid entry for package {.strong {pkg}}.')
     }
   }
 
-  pkg_refs <- unname(deps)
+  deps |>
+    gsub(pattern = '\\s+', replacement = '', x = _) |>
+    trimws()
+}
 
-  cli::cli_alert_success('Parsed {length(pkg_refs)} package references')
-  pkg_refs
+#' Return all defined optional dependency groups in a manifest file
+#'
+#' @param path Path to the `rproject.toml` file.
+#'
+#' @return A character vector of group names (without "-dependencies")
+#' @export
+#'
+#' @examples
+#' all_groups(path = system.file(package = 'manifesto', 'minimal.toml'))
+all_groups <- function(path = 'rproject.toml') {
+  manifest <- tomledit::read_toml(path) |>
+    tomledit::from_toml()
+
+  section_names <- names(manifest)
+
+  if ('all-dependencies' %in% section_names) {
+    cli::cli_warn(c(
+      x = 'Section {.field [all-dependencies]} is reserved and should not be used.',
+      i = 'Use other group names like {.field dev-dependencies} instead.'
+    ))
+  }
+
+  pattern <- '^(.*)-dependencies$'
+  groups <- grep(pattern, section_names, value = TRUE)
+
+  sub(pattern, '\\1', groups)
 }

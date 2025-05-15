@@ -15,8 +15,9 @@ parse_manifest(path = "rproject.toml", groups = NULL)
 A character vector of resolved package references.
 }
 \description{
-Parse a manifesto rproject.toml manifest file
+By default, \code{groups = NULL}, which will only install core dependencies.
+If you want to include all optional groups, set \code{groups = 'all'}.
 }
 \examples{
-# TODO
+parse_manifest(path = system.file(package = 'manifesto', 'minimal.toml'))
 }
