@@ -30,7 +30,7 @@ parse_manifest <- function(path = 'rproject.toml', groups = NULL) {
     for (group in groups) {
       section <- paste0(group, '-dependencies')
       if (!is.null(manifest[[section]])) {
-        cli::cli_alert_info('Including {.strong {group}} group')
+        # cli::cli_alert_info('Including {.strong {group}} group')
         group_refs <- collect_deps(manifest, section)
         all_refs <- c(all_refs, group_refs)
       } else {
@@ -77,6 +77,22 @@ collect_deps <- function(manifest, section) {
         } else {
           deps[[pkg]] <- repo
         }
+      } else if (source == 'git') {
+        if (is.null(repo)) {
+          cli::cli_abort('Package {.strong {pkg}} has source = git but no repo field.')
+        }
+
+        ref_string <- paste0('git::', repo)
+        if (!is.null(ref)) {
+          ref_string <- paste0(ref_string, '@', ref)
+        }
+        deps[[pkg]] <- ref_string
+      } else if (source == 'local') {
+        if (is.null(repo)) {
+          cli::cli_abort('Package {.strong {pkg}} has source = local but no repo (path) specified.')
+        }
+
+        deps[[pkg]] <- paste0('local::', repo)
       } else {
         cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
       }
