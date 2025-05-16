@@ -27,8 +27,10 @@ parse_manifest <- function(path = 'rproject.toml', groups = NULL) {
     if (length(groups) == 1 && groups == 'all') {
       groups <- all_groups(path)
     }
+
     for (group in groups) {
       section <- paste0(group, '-dependencies')
+
       if (!is.null(manifest[[section]])) {
         # cli::cli_alert_info('Including {.strong {group}} group')
         group_refs <- collect_deps(manifest, section)
@@ -55,6 +57,7 @@ collect_deps <- function(manifest, section) {
 
     if (is.character(entry)) {
       deps[[pkg]] <- paste0(pkg, '@', entry)
+
     } else if (is.list(entry)) {
       source <- entry$source %||% 'CRAN'
       version <- entry$version
@@ -67,9 +70,10 @@ collect_deps <- function(manifest, section) {
         } else {
           deps[[pkg]] <- pkg
         }
-      } else if (source == 'github') {
+
+      } else if (source %in% c('github', 'gitlab')) {
         if (is.null(repo)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = github but no repo field.')
+          cli::cli_abort('Package {.strong {pkg}} has source = {source} but no repo field.')
         }
 
         if (!is.null(ref)) {
@@ -77,25 +81,37 @@ collect_deps <- function(manifest, section) {
         } else {
           deps[[pkg]] <- repo
         }
+
       } else if (source == 'git') {
         if (is.null(repo)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = git but no repo field.')
+          cli::cli_abort('Package {.strong {pkg}} has source = git but no repo (URL) specified.')
         }
 
         ref_string <- paste0('git::', repo)
         if (!is.null(ref)) {
           ref_string <- paste0(ref_string, '@', ref)
         }
+
         deps[[pkg]] <- ref_string
+
+      } else if (source == 'url') {
+        if (is.null(repo)) {
+          cli::cli_abort('Package {.strong {pkg}} has source = url but no repo (URL) specified.')
+        }
+
+        deps[[pkg]] <- paste0('url::', repo)
+
       } else if (source == 'local') {
         if (is.null(repo)) {
           cli::cli_abort('Package {.strong {pkg}} has source = local but no repo (path) specified.')
         }
 
         deps[[pkg]] <- paste0('local::', repo)
+
       } else {
         cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
       }
+
     } else {
       cli::cli_warn('Skipping invalid entry for package {.strong {pkg}}.')
     }
