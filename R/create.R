@@ -7,6 +7,8 @@
 #' @param name Optional project name. Defaults to `Project`.
 #' @param version Optional project version. Defaults to `manifest_version()`.
 #' @param r_version Optional R version settings. Defaults to `'*'`.
+#' @param ... Additional named arguments to add to the manifest. These will be
+#' added to the top-level of the TOML file.
 #'
 #' @return Invisibly returns the written path.
 #' @export

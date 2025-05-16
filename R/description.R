@@ -182,6 +182,13 @@ parse_r_version <- function(dep_field) {
 #'
 #' @return Invisibly returns the path to the written DESCRIPTION file.
 #' @export
+#'
+#' @examples
+#' out <- tempfile(pattern = 'DESCRIPTION')
+#' manifest_to_description(
+#'   path = system.file('minimal.toml', package = 'manifesto'),
+#'   out = out
+#' )
 manifest_to_description <- function(path = 'rproject.toml', out = 'DESCRIPTION') {
   manifest <- tomledit::read_toml(path) |>
     tomledit::from_toml()
