@@ -58,7 +58,6 @@ collect_deps <- function(manifest, section) {
 
     if (is.character(entry)) {
       deps[[pkg]] <- paste0(pkg, '@', entry)
-
     } else if (is.list(entry)) {
       source <- entry$source %||% 'CRAN'
       version <- entry$version
@@ -73,7 +72,6 @@ collect_deps <- function(manifest, section) {
         } else {
           deps[[pkg]] <- pkg
         }
-
       } else if (source %in% c('github', 'gitlab')) {
         if (is.null(repo)) {
           cli::cli_abort('Package {.strong {pkg}} has source = {source} but no repo field.')
@@ -84,7 +82,6 @@ collect_deps <- function(manifest, section) {
         } else {
           deps[[pkg]] <- repo
         }
-
       } else if (source == 'git') {
         if (is.null(repo)) {
           cli::cli_abort('Package {.strong {pkg}} has source = git but no repo (URL) specified.')
@@ -96,25 +93,21 @@ collect_deps <- function(manifest, section) {
         }
 
         deps[[pkg]] <- ref_string
-
       } else if (source == 'url') {
         if (is.null(url)) {
           cli::cli_abort('Package {.strong {pkg}} has source = url but no url field specified.')
         }
 
         deps[[pkg]] <- paste0('url::', url)
-
       } else if (source == 'local') {
         if (is.null(path)) {
           cli::cli_abort('Package {.strong {pkg}} has source = local but no repo (path) specified.')
         }
 
         deps[[pkg]] <- paste0('local::', path)
-
       } else {
         cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
       }
-
     } else {
       cli::cli_warn('Skipping invalid entry for package {.strong {pkg}}.')
     }

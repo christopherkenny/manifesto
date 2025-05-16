@@ -1,0 +1,15 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "dedup-test"
+version = "0.1.0"
+
+[dependencies]
+fs = ">= 1.6.0"
+
+[dev-dependencies]
+glue = ">= 1.6.2"
+
+[ci-dependencies]
+fs = ">= 1.4.0"
