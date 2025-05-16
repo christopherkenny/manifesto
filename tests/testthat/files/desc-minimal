@@ -1,0 +1,6 @@
+Package: testpkg
+Version: 0.2.0
+Authors@R: person("Jane", "Doe", email = "jane@example.com", role = c("aut", "cre"))
+Depends: R (>= 4.2.0)
+Imports: dplyr (>= 1.0.0), glue
+Suggests: testthat (>= 3.0.0)
