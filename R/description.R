@@ -22,44 +22,59 @@ manifest_from_description <- function(description = 'DESCRIPTION', path, include
     path <- tempfile(fileext = '.toml')
   }
 
+  # Required fields
   name <- desc$Package
   version <- desc$Version
+
+  # Parse authors safely, with fallback
   authors <- parse_authors_field(desc$`Authors@R`)
+
+  # Extract R version for [environment]
   r_version <- parse_r_version(desc$Depends)
 
+  # Process dependencies from DESCRIPTION fields
   extras <- list(
-    'dependencies' = parse_dependencies(c(desc$Depends, desc$Imports)),
+    dependencies = parse_dependencies(c(
+      filter_dependencies(desc$Depends),
+      filter_dependencies(desc$Imports)
+    )),
     'suggests-dependencies' = parse_dependencies(desc$Suggests),
     'linkingto-dependencies' = parse_dependencies(desc$LinkingTo),
     'enhances-dependencies' = parse_dependencies(desc$Enhances)
   )
 
-  # Optionally remove empty groups
-  if (isFALSE(include_empty_groups)) {
+  # Optionally remove empty sections
+  if (!include_empty_groups) {
     extras <- Filter(length, extras)
   }
 
-  # Always include authors and r_version in their correct slots
+  # Always construct a valid [project] block
   project <- list(name = name, version = version)
-
-  authors <- parse_authors_field(desc$`Authors@R`)
   if (length(authors) > 0) {
     project$authors <- authors
   }
 
+  # Add to manifest fields
   extras$project <- project
+  extras$environment <- list(r_version = r_version)
 
-  # Delegate to create_manifest() for writing + validation
+  # Create and write manifest
   do.call(
     create_manifest,
     c(list(
-    path = path,
-    name = name,
-    version = version,
-    r_version = r_version
-  ), extras)
+      path = path,
+      name = name,
+      version = version,
+      r_version = r_version
+    ), extras)
   )
+}
 
+filter_dependencies <- function(field) {
+  if (is.null(field)) return(NULL)
+
+  entries <- unlist(strsplit(field, ',\\s*'))
+  entries[!grepl('^R\\b', entries)]
 }
 
 parse_description <- function(path) {
@@ -148,3 +163,111 @@ parse_r_version <- function(dep_field) {
 
   '*'
 }
+
+#' Convert a TOML manifest to a DESCRIPTION file
+#'
+#' Generates a valid DESCRIPTION file from a manifest. Required fields like
+#' Title, Description, License, and Authors@R are inserted as TODOs if not present.
+#'
+#' @param path Path to the TOML manifest file.
+#' @param out Path to the DESCRIPTION file to write. Defaults to 'DESCRIPTION'.
+#'
+#' @return Invisibly returns the path to the written DESCRIPTION file.
+#' @export
+manifest_to_description <- function(path = 'rproject.toml', out = 'DESCRIPTION') {
+  manifest <- tomledit::read_toml(path) |>
+    tomledit::from_toml()
+
+    desc <- list()
+
+    # Required base fields with fallback
+    desc$Package <- manifest$project$name %||% 'TODOPackage'
+    desc$Version <- manifest$project$version %||% '0.0.0.9000'
+    desc$Title <- 'TODO Title'
+    desc$Description <- 'TODO Description'
+    desc$License <- 'TODO License'
+    desc$Encoding <- 'UTF-8'
+
+    # Authors block
+    if (!is.null(manifest$project$authors)) {
+      desc$`Authors@R` <- authors_to_r(manifest$project$authors)
+    } else {
+      desc$`Authors@R` <- 'person("TODO", "TODO", email = "todo@email.com", role = c("aut", "cre"))'
+    }
+
+    # Only R version goes into Depends
+    if (!identical(manifest$environment$r_version, '*')) {
+      desc$Depends <- paste0('R (', manifest$environment$r_version, ')')
+    }
+
+    # [dependencies] → Imports
+    if (!is.null(manifest$dependencies)) {
+      desc$Imports <- deps_to_field(manifest$dependencies)
+    }
+
+    # Optional groups
+    optional_sections <- c('suggests-dependencies', 'linkingto-dependencies', 'enhances-dependencies')
+    for (section in optional_sections) {
+      if (!is.null(manifest[[section]])) {
+        field <- switch(section,
+                        'suggests-dependencies' = 'Suggests',
+                        'linkingto-dependencies' = 'LinkingTo',
+                        'enhances-dependencies' = 'Enhances'
+        )
+        desc[[field]] <- deps_to_field(manifest[[section]])
+      }
+    }
+
+    # Write DESCRIPTION file
+    write.dcf(desc, file = out)
+    invisible(out)
+  }
+
+authors_to_r <- function(authors) {
+  if (!is.list(authors)) return(NULL)
+
+  people <- vapply(authors, function(x) {
+    name <- x$name %||% 'TODO'
+    name_parts <- strsplit(name, '\\s+')[[1]]
+    given <- paste(name_parts[-length(name_parts)], collapse = ' ')
+    family <- name_parts[length(name_parts)]
+
+    email <- x$email %||% NULL
+    roles <- x$roles %||% 'aut'
+
+    person <- sprintf(
+      'person(%s, %s%s, role = c(%s))',
+      dquote(given),
+      dquote(family),
+      if (!is.null(email)) paste0(', email = ', dquote(email)) else '',
+      paste(dquote(roles), collapse = ', ')
+    )
+
+    person
+  }, character(1))
+
+  paste0('c(\n  ', paste(people, collapse = ',\n  '), '\n)')
+}
+
+deps_to_field <- function(deps) {
+  if (!length(deps)) return(NULL)
+
+  entries <- vapply(names(deps), function(pkg) {
+    version <- deps[[pkg]]
+    if (identical(version, '*')) {
+      pkg
+    } else {
+      sprintf('%s (%s)', pkg, version)
+    }
+  }, character(1))
+
+  paste(entries, collapse = ',\n    ')
+}
+
+dquote <- function(x) {
+  sprintf('"%s"', x)
+}
+
+
+
+

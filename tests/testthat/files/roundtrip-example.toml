@@ -1,0 +1,20 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "myproject"
+version = "0.1.2"
+authors = [
+  { name = "Jane Doe", email = "jane@example.com", roles = ["aut", "cre"] },
+  { name = "John Smith", roles = ["ctb"] }
+]
+
+[environment]
+r_version = ">= 4.1.0"
+
+[dependencies]
+dplyr = ">= 1.0.0"
+glue = "*"
+
+[suggests-dependencies]
+testthat = ">= 3.0.0"
