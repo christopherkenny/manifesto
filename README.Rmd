@@ -78,8 +78,29 @@ For most users, you will only need to use the `install_manifest()` function.
 This handles organizing and installing packages dound in the manifest file.
 By default, this file is called `rproject.toml`.
 
+Below, we install one of the example manifest files included with the package.
+Note that for the example, `dry_run = TRUE` means that no packages will be installed, but details of what would be installed are printed to the console.
+
+
 ```{r example}
 library(manifesto)
-# install_manifest()
+
+manifest <- system.file(package = 'manifesto', 'complex.toml')
+
+install_manifest(path = manifest, dry_run = TRUE)
 ```
 
+`manifesto` can also be used to create a manifest file from a package's `DESCRIPTION` file.
+
+```{r convert}
+manifest <- manifest_from_description(
+  path = system.file(package = 'manifesto', 'complex.toml')
+)
+readLines(manifest) |> 
+  cat(sep = '\n')
+```
+
+
+## License
+
+This package is licensed under the [MIT License](LICENSE.md).

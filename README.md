@@ -74,7 +74,56 @@ For most users, you will only need to use the `install_manifest()`
 function. This handles organizing and installing packages dound in the
 manifest file. By default, this file is called `rproject.toml`.
 
+Below, we install one of the example manifest files included with the
+package. Note that for the example, `dry_run = TRUE` means that no
+packages will be installed, but details of what would be installed are
+printed to the console.
+
 ``` r
 library(manifesto)
-# install_manifest()
+
+manifest <- system.file(package = 'manifesto', 'complex.toml')
+
+install_manifest(path = manifest, dry_run = TRUE)
+#> 
+#> ── Dry run: would install the following 3 packages ──
+#> 
+#> • dplyr@>=1.0.10
+#> • BiocManager@>=1.30.10
+#> • readr@2.1.4
 ```
+
+`manifesto` can also be used to create a manifest file from a package’s
+`DESCRIPTION` file.
+
+``` r
+manifest <- manifest_from_description(
+  path = system.file(package = 'manifesto', 'complex.toml')
+)
+readLines(manifest) |> 
+  cat(sep = '\n')
+#> [manifesto]
+#> version = "0.0.1"
+#> 
+#> [project]
+#> name = "manifesto"
+#> version = "0.0.1"
+#> authors = [
+#>     { name = "Christopher T. Kenny", email = "christopherkenny@fas.harvard.edu", roles = ["aut", "cre"] }
+#> ]
+#> 
+#> [environment]
+#> r_version = "*"
+#> 
+#> [dependencies]
+#> cli = "*"
+#> pak = "*"
+#> tomledit = "*"
+#> 
+#> [suggests-dependencies]
+#> testthat = ">= 3.0.0"
+```
+
+## License
+
+This package is licensed under the [MIT License](LICENSE.md).
