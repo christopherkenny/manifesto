@@ -71,7 +71,9 @@ manifest_from_description <- function(description = 'DESCRIPTION', path, include
 }
 
 filter_dependencies <- function(field) {
-  if (is.null(field)) return(NULL)
+  if (is.null(field)) {
+    return(NULL)
+  }
 
   entries <- unlist(strsplit(field, ',\\s*'))
   entries[!grepl('^R\\b', entries)]
@@ -104,13 +106,19 @@ parse_dependencies <- function(dep_field) {
 }
 
 parse_authors_field <- function(authors_field) {
-  if (is.null(authors_field)) return(list())
+  if (is.null(authors_field)) {
+    return(list())
+  }
 
   expr <- tryCatch(parse(text = authors_field)[[1]], error = function(e) NULL)
-  if (is.null(expr)) return(list())
+  if (is.null(expr)) {
+    return(list())
+  }
 
   authors <- tryCatch(eval(expr), error = function(e) NULL)
-  if (is.null(authors)) return(list())
+  if (is.null(authors)) {
+    return(list())
+  }
 
   if (inherits(authors, 'person')) {
     authors <- as.list(authors)
@@ -178,53 +186,55 @@ manifest_to_description <- function(path = 'rproject.toml', out = 'DESCRIPTION')
   manifest <- tomledit::read_toml(path) |>
     tomledit::from_toml()
 
-    desc <- list()
+  desc <- list()
 
-    # Required base fields with fallback
-    desc$Package <- manifest$project$name %||% 'TODOPackage'
-    desc$Version <- manifest$project$version %||% '0.0.0.9000'
-    desc$Title <- 'TODO Title'
-    desc$Description <- 'TODO Description'
-    desc$License <- 'TODO License'
-    desc$Encoding <- 'UTF-8'
+  # Required base fields with fallback
+  desc$Package <- manifest$project$name %||% 'TODOPackage'
+  desc$Version <- manifest$project$version %||% '0.0.0.9000'
+  desc$Title <- 'TODO Title'
+  desc$Description <- 'TODO Description'
+  desc$License <- 'TODO License'
+  desc$Encoding <- 'UTF-8'
 
-    # Authors block
-    if (!is.null(manifest$project$authors)) {
-      desc$`Authors@R` <- authors_to_r(manifest$project$authors)
-    } else {
-      desc$`Authors@R` <- 'person("TODO", "TODO", email = "todo@email.com", role = c("aut", "cre"))'
-    }
-
-    # Only R version goes into Depends
-    if (!identical(manifest$environment$r_version, '*')) {
-      desc$Depends <- paste0('R (', manifest$environment$r_version, ')')
-    }
-
-    # [dependencies] → Imports
-    if (!is.null(manifest$dependencies)) {
-      desc$Imports <- deps_to_field(manifest$dependencies)
-    }
-
-    # Optional groups
-    optional_sections <- c('suggests-dependencies', 'linkingto-dependencies', 'enhances-dependencies')
-    for (section in optional_sections) {
-      if (!is.null(manifest[[section]])) {
-        field <- switch(section,
-                        'suggests-dependencies' = 'Suggests',
-                        'linkingto-dependencies' = 'LinkingTo',
-                        'enhances-dependencies' = 'Enhances'
-        )
-        desc[[field]] <- deps_to_field(manifest[[section]])
-      }
-    }
-
-    # Write DESCRIPTION file
-    write.dcf(desc, file = out)
-    invisible(out)
+  # Authors block
+  if (!is.null(manifest$project$authors)) {
+    desc$`Authors@R` <- authors_to_r(manifest$project$authors)
+  } else {
+    desc$`Authors@R` <- 'person("TODO", "TODO", email = "todo@email.com", role = c("aut", "cre"))'
   }
 
+  # Only R version goes into Depends
+  if (!identical(manifest$environment$r_version, '*')) {
+    desc$Depends <- paste0('R (', manifest$environment$r_version, ')')
+  }
+
+  # [dependencies] → Imports
+  if (!is.null(manifest$dependencies)) {
+    desc$Imports <- deps_to_field(manifest$dependencies)
+  }
+
+  # Optional groups
+  optional_sections <- c('suggests-dependencies', 'linkingto-dependencies', 'enhances-dependencies')
+  for (section in optional_sections) {
+    if (!is.null(manifest[[section]])) {
+      field <- switch(section,
+        'suggests-dependencies' = 'Suggests',
+        'linkingto-dependencies' = 'LinkingTo',
+        'enhances-dependencies' = 'Enhances'
+      )
+      desc[[field]] <- deps_to_field(manifest[[section]])
+    }
+  }
+
+  # Write DESCRIPTION file
+  write.dcf(desc, file = out)
+  invisible(out)
+}
+
 authors_to_r <- function(authors) {
-  if (!is.list(authors)) return(NULL)
+  if (!is.list(authors)) {
+    return(NULL)
+  }
 
   people <- vapply(authors, function(x) {
     name <- x$name %||% 'TODO'
@@ -250,7 +260,9 @@ authors_to_r <- function(authors) {
 }
 
 deps_to_field <- function(deps) {
-  if (!length(deps)) return(NULL)
+  if (!length(deps)) {
+    return(NULL)
+  }
 
   entries <- vapply(names(deps), function(pkg) {
     version <- deps[[pkg]]
@@ -267,7 +279,3 @@ deps_to_field <- function(deps) {
 dquote <- function(x) {
   sprintf('"%s"', x)
 }
-
-
-
-
