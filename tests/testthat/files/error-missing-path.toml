@@ -1,0 +1,9 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "missing-path"
+version = "0.1.0"
+
+[dependencies]
+devpkg = { source = "local" }

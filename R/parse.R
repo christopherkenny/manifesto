@@ -34,6 +34,7 @@ parse_manifest <- function(path = 'rproject.toml', groups = NULL) {
       if (!is.null(manifest[[section]])) {
         # cli::cli_alert_info('Including {.strong {group}} group')
         group_refs <- collect_deps(manifest, section)
+        group_refs <- group_refs[setdiff(names(group_refs), names(all_refs))]
         all_refs <- c(all_refs, group_refs)
       } else {
         cli::cli_warn('Group {.strong {group}} not found in the manifest.')
@@ -62,7 +63,9 @@ collect_deps <- function(manifest, section) {
       source <- entry$source %||% 'CRAN'
       version <- entry$version
       repo <- entry$repo
+      url <- entry$url
       ref <- entry$ref
+      path <- entry$path
 
       if (source %in% c('CRAN', 'bioc')) {
         if (!is.null(version)) {
@@ -95,18 +98,18 @@ collect_deps <- function(manifest, section) {
         deps[[pkg]] <- ref_string
 
       } else if (source == 'url') {
-        if (is.null(repo)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = url but no repo (URL) specified.')
+        if (is.null(url)) {
+          cli::cli_abort('Package {.strong {pkg}} has source = url but no url field specified.')
         }
 
-        deps[[pkg]] <- paste0('url::', repo)
+        deps[[pkg]] <- paste0('url::', url)
 
       } else if (source == 'local') {
-        if (is.null(repo)) {
+        if (is.null(path)) {
           cli::cli_abort('Package {.strong {pkg}} has source = local but no repo (path) specified.')
         }
 
-        deps[[pkg]] <- paste0('local::', repo)
+        deps[[pkg]] <- paste0('local::', path)
 
       } else {
         cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
@@ -117,9 +120,12 @@ collect_deps <- function(manifest, section) {
     }
   }
 
-  deps |>
+  deps <- deps |>
     gsub(pattern = '\\s+', replacement = '', x = _) |>
     trimws()
+
+  names(deps) <- names(entries)
+  deps
 }
 
 #' Return all defined optional dependency groups in a manifest file

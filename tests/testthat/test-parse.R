@@ -61,3 +61,17 @@ test_that('`parse_manifest()` handles local source entries', {
 
   expect_true(any(grepl('^local::../bskyr$', refs)))
 })
+
+test_that('`parse_manifest()` handles url sources', {
+  path <- testthat::test_path('files', 'works-url.toml')
+  refs <- parse_manifest(path, groups = 'dev')
+
+  expect_true(any(grepl('^url::https://cran\\.r-project\\.org', refs)))
+})
+
+test_that('`parse_manifest()` handles gitlab sources', {
+  path <- testthat::test_path('files', 'works-gitlab.toml')
+  refs <- parse_manifest(path, groups = 'dev')
+
+  expect_true(any(grepl('^r-lib/archive@v1\\.0\\.1', refs)))
+})

@@ -71,8 +71,9 @@ validate_entry <- function(pkg, entry) {
   repo <- entry$repo %||% NA_character_
   ref <- entry$ref %||% NA_character_
   url <- entry$url %||% NA_character_
+  path <- entry$path %||% NA_character_
 
-  allowed_sources <- c('CRAN', 'bioc', 'github', 'gitlab', 'git', 'url')
+  allowed_sources <- c('CRAN', 'bioc', 'github', 'gitlab', 'git', 'url', 'local', 'url')
 
   # Check source
   if (!source %in% allowed_sources) {
@@ -92,7 +93,7 @@ validate_entry <- function(pkg, entry) {
     cli::cli_warn('Package {.strong {pkg}} from {.val url} is missing a {.field url} field.')
   }
 
-  if (source == 'local' && is.na(entry$path)) {
+  if (source == 'local' && is.na(path)) {
     cli::cli_warn('Package {.strong {pkg}} from {.val local} is missing a {.field path} field.')
   }
 

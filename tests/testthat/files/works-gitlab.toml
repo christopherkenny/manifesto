@@ -1,0 +1,12 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "works-gitlab"
+version = "0.1.0"
+
+[dependencies]
+fs = ">= 1.6.0"
+
+[dev-dependencies]
+archive = { source = "gitlab", repo = "r-lib/archive", ref = "v1.0.1" }

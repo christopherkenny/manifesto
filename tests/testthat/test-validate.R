@@ -32,3 +32,23 @@ test_that('`validate_manifest()` errors when github repo is missing', {
     'source = github but no repo'
   )
 })
+
+test_that('`validate_manifest()` works with url source', {
+  path <- testthat::test_path('files', 'works-url.toml')
+  expect_true(validate_manifest(path, groups = 'dev'))
+})
+
+test_that('`validate_manifest()` works with gitlab source', {
+  path <- testthat::test_path('files', 'works-gitlab.toml')
+  expect_true(validate_manifest(path, groups = 'dev'))
+})
+
+test_that('`validate_manifest()` warns when url source is missing url field', {
+  path <- testthat::test_path('files', 'error-missing-url.toml')
+  expect_warning(validate_manifest(path), 'missing a url field')
+})
+
+test_that('`validate_manifest()` warns when local source is missing path field', {
+  path <- testthat::test_path('files', 'error-missing-path.toml')
+  expect_warning(validate_manifest(path), 'missing a path field')
+})

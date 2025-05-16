@@ -9,4 +9,4 @@ version = "0.1.0"
 readr = ">= 2.1.4"
 
 [dev-dependencies]
-bskyr = { source = "local", repo = "../bskyr" }
+bskyr = { source = "local", path = "../bskyr" }

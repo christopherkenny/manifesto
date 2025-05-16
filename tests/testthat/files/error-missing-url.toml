@@ -1,0 +1,9 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "missing-url"
+version = "0.1.0"
+
+[dependencies]
+glue = { source = "url" }
