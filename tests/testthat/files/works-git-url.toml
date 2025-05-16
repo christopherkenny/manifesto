@@ -1,0 +1,13 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "git-url-test"
+version = "0.1.0"
+
+[dependencies]
+cli = ">= 3.6.0"
+
+[dev-dependencies]
+tibble = { source = "git", repo = "https://github.com/tidyverse/tibble", ref = "v3.2.1" }
+

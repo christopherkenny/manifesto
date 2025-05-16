@@ -81,7 +81,7 @@ validate_entry <- function(pkg, entry) {
 
   # Warn for missing repo when likely needed
   if (source %in% c('github', 'gitlab') && is.na(repo)) {
-    cli::cli_warn('Package {.strong {pkg}} from {.val {source}} is missing a {.field repo} field.')
+    cli::cli_abort('Package {.strong {pkg}} has source = {source} but no repo field.')
   }
 
   if (source == 'git' && is.na(url)) {

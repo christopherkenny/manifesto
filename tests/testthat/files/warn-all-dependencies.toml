@@ -1,0 +1,12 @@
+[manifesto]
+version = "0.1.0"
+
+[project]
+name = "warn-all-deps"
+version = "0.1.0"
+
+[dependencies]
+glue = ">= 1.6.2"
+
+[all-dependencies]
+fs = ">= 1.6.0"

@@ -9,4 +9,4 @@
 library(testthat)
 library(manifesto)
 
-test_check("manifesto")
+test_check('manifesto')
