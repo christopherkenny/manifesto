@@ -128,9 +128,6 @@ parse_authors_field <- function(authors_field) {
   out
 }
 
-
-
-
 parse_r_version <- function(dep_field) {
   if (is.null(dep_field)) {
     return('*')
