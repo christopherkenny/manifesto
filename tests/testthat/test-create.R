@@ -1,5 +1,5 @@
 test_that('`create_manifest()` writes a valid manifest file', {
-  path <- create_manifest(name = 'demo', version = '0.1.0')
+  path <- create_manifest(project_name = 'demo', project_version = '0.1.0')
 
   expect_true(file.exists(path))
 

@@ -6,8 +6,9 @@
 \usage{
 create_manifest(
   path,
-  name = "Project",
-  version = manifest_version(),
+  project_name = "Project",
+  project_version = "0.0.1",
+  manifesto_version = manifest_version(),
   r_version = "*",
   ...
 )
@@ -15,14 +16,17 @@ create_manifest(
 \arguments{
 \item{path}{File path to write to. If missing, a temporary file will be used.}
 
-\item{name}{Optional project name. Defaults to \code{Project}.}
+\item{project_name}{Optional project name. Defaults to \code{Project}.}
 
-\item{version}{Optional project version. Defaults to \code{manifest_version()}.}
+\item{project_version}{Optional project version. Defaults to \verb{0.0.1}.}
 
 \item{r_version}{Optional R version settings. Defaults to \code{'*'}.}
 
 \item{...}{Additional named arguments to add to the manifest. These will be
 added to the top-level of the TOML file.}
+
+\item{manifest_version}{Optional \code{manifesto} version. Defaults to the current
+package version.}
 }
 \value{
 Invisibly returns the written path.

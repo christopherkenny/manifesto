@@ -4,8 +4,10 @@
 #' `[environment]`, and empty `[dependencies]` section.
 #'
 #' @param path File path to write to. If missing, a temporary file will be used.
-#' @param name Optional project name. Defaults to `Project`.
-#' @param version Optional project version. Defaults to `manifest_version()`.
+#' @param project_name Optional project name. Defaults to `Project`.
+#' @param project_version Optional project version. Defaults to `0.0.1`.
+#' @param manifest_version Optional `manifesto` version. Defaults to the current
+#' package version.
 #' @param r_version Optional R version settings. Defaults to `'*'`.
 #' @param ... Additional named arguments to add to the manifest. These will be
 #' added to the top-level of the TOML file.
@@ -19,8 +21,9 @@
 #'   'suggests-dependencies' = list(testthat = '>= 3.0.0')
 #' )
 create_manifest <- function(path,
-                            name = 'Project',
-                            version = manifest_version(),
+                            project_name = 'Project',
+                            project_version = '0.0.1',
+                            manifesto_version = manifest_version(),
                             r_version = '*',
                             ...) {
   if (missing(path)) {
@@ -28,10 +31,10 @@ create_manifest <- function(path,
   }
 
   manifest <- list(
-    manifesto = list(version = manifest_version()),
+    manifesto = list(version = manifesto_version),
     project = list(
-      name = name,
-      version = version
+      name = project_name,
+      version = project_version
     ),
     environment = list(
       r_version = r_version

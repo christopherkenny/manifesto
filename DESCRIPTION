@@ -24,5 +24,8 @@ Imports:
 URL: https://github.com/christopherkenny/manifesto
 BugReports: https://github.com/christopherkenny/manifesto/issues
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

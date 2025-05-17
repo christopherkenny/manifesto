@@ -63,8 +63,8 @@ manifest_from_description <- function(description = 'DESCRIPTION', path, include
     create_manifest,
     c(list(
       path = path,
-      name = name,
-      version = version,
+      project_name = name,
+      project_version = version,
       r_version = r_version
     ), extras)
   )
