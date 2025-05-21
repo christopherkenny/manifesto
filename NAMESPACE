@@ -2,8 +2,10 @@
 
 export(all_groups)
 export(create_manifest)
+export(current_r_version)
 export(install_manifest)
 export(manifest_from_description)
+export(manifest_from_loaded)
 export(manifest_to_description)
 export(manifest_version)
 export(parse_manifest)

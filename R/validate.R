@@ -98,7 +98,7 @@ validate_entry <- function(pkg, entry) {
   }
 
   # Soft version check — we accept almost anything that pak accepts
-  if (!is.na(version) && !grepl('^([><=]+\\s*)?\\d+(\\.\\d+)*$', version)) {
+  if (!is.na(version) && !grepl('^([><=!~]+\\s*)?\\d+(\\.\\d+)*(-[0-9]+)?$', version)) {
     cli::cli_warn('Version constraint for package {.strong {pkg}} looks unusual: {.val {version}}')
   }
 }

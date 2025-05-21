@@ -96,7 +96,7 @@ install_manifest(path = manifest, dry_run = TRUE)
 manifest <- manifest_from_description(
   path = system.file(package = 'manifesto', 'complex.toml')
 )
-readLines(manifest) |> 
+readLines(manifest) |>
   cat(sep = '\n')
 ```
 
