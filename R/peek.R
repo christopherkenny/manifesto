@@ -64,8 +64,21 @@ manifest_peek <- function(path = 'rproject.toml') {
       })
 
       pkg_versions <- pkg_versions[!is.na(pkg_versions)]
+
       if (length(pkg_versions) > 0) {
-        cli::cli_li('{.strong {group}}: {paste(pkg_versions, collapse = ", ")}')
+        n_display <- 6
+        if (length(pkg_versions) > n_display) {
+          shown <- pkg_versions[1:n_display]
+          omitted <- length(pkg_versions) - n_display
+          summary <- paste0(
+            paste(shown, collapse = ', '),
+            cli::format_inline(', and {.val {omitted}} more package{?s}')
+          )
+        } else {
+          summary <- paste(pkg_versions, collapse = ', ')
+        }
+
+        cli::cli_li('{.strong {group}}: {summary}')
       }
     }
 
