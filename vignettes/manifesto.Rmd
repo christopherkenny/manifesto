@@ -71,8 +71,8 @@ path
 ```
 
 ```{r, echo = FALSE}
-path |> 
-  readLines() |> 
+path |>
+  readLines() |>
   cat(sep = '\n')
 ```
 
@@ -360,13 +360,13 @@ custompkg = { source = "url", url = "https://example.com/custompkg.tar.gz" }
 ```{r}
 manifest_desc <- tempfile(fileext = '.toml')
 manifest_from_description(
-  system.file(package = 'cli', 'DESCRIPTION'), 
+  system.file(package = 'cli', 'DESCRIPTION'),
   path = manifest_desc
 )
 ```
 
 ```{r, echo = FALSE}
-readLines(manifest_desc) |> 
+readLines(manifest_desc) |>
   cat(sep = '\n')
 ```
 
@@ -385,7 +385,7 @@ manifest_to_description(manifest_desc, out = description_path)
 ```
 
 ```{r, echo = FALSE}
-readLines(description_path) |> 
+readLines(description_path) |>
   cat(sep = '\n')
 ```
 
