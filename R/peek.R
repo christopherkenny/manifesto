@@ -47,7 +47,7 @@ manifest_peek <- function(path = 'rproject.toml') {
       group <- if (section == 'dependencies') 'default' else sub('-?dependencies$', '', section)
       deps <- manifest[[section]]
 
-      pkg_versions <- purrr::imap_chr(deps, \(entry, pkg) {
+      pkg_versions <- purrr::imap_chr(deps, function(entry, pkg) {
         version <- if (is.character(entry) && length(entry) == 1) {
           entry
         } else if (!is.null(entry[['version']])) {
