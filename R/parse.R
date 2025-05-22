@@ -10,8 +10,8 @@
 #' @export
 #'
 #' @examples
-#' parse_manifest(path = system.file(package = 'manifesto', 'minimal.toml'))
-parse_manifest <- function(path = 'rproject.toml', groups = NULL) {
+#' manifest_parse(path = system.file(package = 'manifesto', 'minimal.toml'))
+manifest_parse <- function(path = 'rproject.toml', groups = NULL) {
   if (!file.exists(path)) {
     cli::cli_abort('The file {.file {path}} does not exist.')
   }

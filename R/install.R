@@ -8,14 +8,14 @@
 #' @export
 #'
 #' @examples
-#' install_manifest(
+#' manifest_install(
 #'   path = system.file(package = 'manifesto', 'minimal.toml'),
 #'   dry_run = TRUE
 #' )
-install_manifest <- function(path = 'rproject.toml', groups = NULL, dry_run = FALSE) {
-  validate_manifest(path = path, groups = groups)
+manifest_install <- function(path = 'rproject.toml', groups = NULL, dry_run = FALSE) {
+  manifest_validate(path = path, groups = groups)
 
-  refs <- parse_manifest(path = path, groups = groups)
+  refs <- manifest_parse(path = path, groups = groups)
 
   if (length(refs) == 0) {
     cli::cli_alert_danger('No packages to install.')

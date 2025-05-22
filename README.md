@@ -70,7 +70,7 @@ pak::pak('christopherkenny/manifesto')
 
 ## Example
 
-For most users, you will only need to use the `install_manifest()`
+For most users, you will only need to use the `manifest_install()`
 function. This handles organizing and installing packages dound in the
 manifest file. By default, this file is called `rproject.toml`.
 
@@ -84,7 +84,7 @@ library(manifesto)
 
 manifest <- system.file(package = 'manifesto', 'complex.toml')
 
-install_manifest(path = manifest, dry_run = TRUE)
+manifest_install(path = manifest, dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 3 packages ──
 #> 

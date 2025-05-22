@@ -7,8 +7,8 @@
 #' @export
 #'
 #' @examples
-#' validate_manifest(path = system.file(package = 'manifesto', 'minimal.toml'))
-validate_manifest <- function(path = 'rproject.toml', groups = NULL) {
+#' manifest_validate(path = system.file(package = 'manifesto', 'minimal.toml'))
+manifest_validate <- function(path = 'rproject.toml', groups = NULL) {
   if (!file.exists(path)) {
     cli::cli_abort('The file {.file {path}} does not exist.')
   }

@@ -51,7 +51,7 @@ manifest_from_loaded <- function(path,
     vapply(pkg_info, function(pkg) pkg$name, character(1))
   )
 
-  create_manifest(
+  manifest_create(
     path = path,
     dependencies = deps,
     r_version = current_r_version()

@@ -16,11 +16,11 @@
 #' @export
 #'
 #' @examples
-#' path <- create_manifest(
+#' path <- manifest_create(
 #'   dependencies = list(dplyr = '>= 1.0.0'),
 #'   'suggests-dependencies' = list(testthat = '>= 3.0.0')
 #' )
-create_manifest <- function(path,
+manifest_create <- function(path,
                             project_name = 'Project',
                             project_version = '0.0.1',
                             manifesto_version = manifest_version(),
@@ -46,7 +46,7 @@ create_manifest <- function(path,
   extras <- extras[!vapply(names(extras), is.null, logical(1))]
 
   if (any(names(extras) == '' | is.null(names(extras)))) {
-    cli::cli_abort('All additional arguments to `create_manifest()` must be named.')
+    cli::cli_abort('All additional arguments to `manifest_create()` must be named.')
   }
 
   for (name in names(extras)) {
@@ -56,7 +56,7 @@ create_manifest <- function(path,
   toml <- tomledit::as_toml(manifest)
   tomledit::write_toml(toml, path)
 
-  validate_manifest(path)
+  manifest_validate(path)
 
   invisible(path)
 }

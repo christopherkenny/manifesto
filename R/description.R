@@ -60,7 +60,7 @@ manifest_from_description <- function(description = 'DESCRIPTION', path, include
 
   # Create and write manifest
   do.call(
-    create_manifest,
+    manifest_create,
     c(list(
       path = path,
       project_name = name,

@@ -45,20 +45,20 @@ manifest_path <- system.file('complex.toml', package = 'manifesto')
 To install all dependencies listed in a TOML manifest:
 
 ```{r, eval = FALSE}
-install_manifest(manifest_path)
+manifest_install(manifest_path)
 ```
 
 To install with optional groups:
 
 ```{r, eval = FALSE}
-install_manifest(manifest_path, groups = 'dev')
-install_manifest(manifest_path, groups = c('dev', 'ci'))
+manifest_install(manifest_path, groups = 'dev')
+manifest_install(manifest_path, groups = c('dev', 'ci'))
 ```
 
 To preview what would be installed:
 
 ```{r}
-install_manifest(manifest_path, dry_run = TRUE)
+manifest_install(manifest_path, dry_run = TRUE)
 ```
 
 ## Creating and Using a Manifest
@@ -66,7 +66,7 @@ install_manifest(manifest_path, dry_run = TRUE)
 ### Creating a Minimal Manifest
 
 ```{r}
-path <- create_manifest()
+path <- manifest_create()
 path
 ```
 
@@ -95,7 +95,7 @@ Here, we specify that we need `dplyr` version `>= 1.0.0` and any version of `ggp
 Then run:
 
 ```{r}
-create_manifest(
+manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
   r_version = '>= 4.2.0',
@@ -127,10 +127,10 @@ ggplot2 = "*"
 #### Adding optional dependency groups
 
 Often, we need to specify optional dependencies for development, testing, or CI.
-We can do this by passing additional named arguments to `create_manifest()`.
+We can do this by passing additional named arguments to `manifest_create()`.
 
 ```{r}
-create_manifest(
+manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
   r_version = '>= 4.2.0',
@@ -177,10 +177,10 @@ Not all packages are available on CRAN.
 You can include packages from GitHub or other sources by specifying additional details.
 Note that `manifesto` uses the `pak` package to handle these dependencies, so any source that `pak` supports can be used.
 
-The corresponding call to `create_manifest()` would look like this:
+The corresponding call to `manifest_create()` would look like this:
 
 ```{r}
-create_manifest(
+manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
   r_version = '>= 4.2.0',
@@ -220,7 +220,7 @@ gh = { source = "github", repo = "r-lib/gh", ref = "v1.4.0" }
 You can also specify a local package path for development or testing purposes.
 
 ```{r}
-create_manifest(
+manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
   r_version = '>= 4.2.0',
@@ -258,7 +258,7 @@ These examples reflect common patterns for specifying runtime, development, CI, 
 You can validate the structure and content of a manifest with:
 
 ```{r}
-validate_manifest(path = manifest_path)
+manifest_validate(path = manifest_path)
 ```
 
 This checks for required sections, valid dependency specifications, and correct field usage.
@@ -266,8 +266,8 @@ This checks for required sections, valid dependency specifications, and correct 
 ## Example Workflow
 
 In general, you only have to create and share a file.
-You can use the `create_manifest()` function to create a manifest file.
-Then anyone with the file can use `install_manifest()` to install the dependencies.
+You can use the `manifest_create()` function to create a manifest file.
+Then anyone with the file can use `manifest_install()` to install the dependencies.
 `manifesto` is a generally lightweight package, so it should not add much overhead to your workflow.
 
 The use of groups allows you to specify different sets of dependencies for different purposes, such as development, testing, or for workshops.
@@ -277,7 +277,7 @@ The original motivation was as a workshop tool, but has expanded a bit to allow 
 ### 1. Creating a new manifest with common dependencies
 
 ```{r}
-manifest <- create_manifest(
+manifest <- manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
   version = '0.1.0',
@@ -299,7 +299,7 @@ This creates a manifest for an R project that uses `dplyr` and `ggplot2`, with d
 ### 2. Installing core and dev dependencies
 
 ```{r}
-install_manifest(manifest, groups = 'dev', dry_run = TRUE)
+manifest_install(manifest, groups = 'dev', dry_run = TRUE)
 ```
 
 This installs everything from `[dependencies]` and `[dev-dependencies]`.
@@ -315,7 +315,7 @@ Groups like `dev` would be used for development or testing.
 The special group name `all` is reserved to allow a user to install everything in the manifest.
 
 ```{r}
-install_manifest(manifest, groups = 'all', dry_run = TRUE)
+manifest_install(manifest, groups = 'all', dry_run = TRUE)
 ```
 
 By default, only `[dependencies]` is installed, whereas `all` installs everything.
