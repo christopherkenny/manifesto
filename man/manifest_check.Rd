@@ -12,7 +12,7 @@ manifest_check(path = "rproject.toml", groups = NULL)
 \item{groups}{Optional dependency groups to include. Defaults to NULL (core only).}
 }
 \value{
-A \code{tibble::tibble} reporting installed version, required version, and status.
+A \code{data.frame} reporting installed version, required version, and status.
 }
 \description{
 Check if the installed packages match the manifest requirements

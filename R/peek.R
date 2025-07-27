@@ -44,24 +44,33 @@ manifest_peek <- function(path = 'rproject.toml') {
     cli::cli_ul()
 
     for (section in dep_sections) {
-      group <- if (section == 'dependencies') 'default' else sub('-?dependencies$', '', section)
+      group <- if (section == 'dependencies') {
+        'default'
+      } else {
+        sub('-?dependencies$', '', section)
+      }
       deps <- manifest[[section]]
 
-      pkg_versions <- purrr::imap_chr(deps, function(entry, pkg) {
-        version <- if (is.character(entry) && length(entry) == 1) {
-          entry
-        } else if (!is.null(entry[['version']])) {
-          entry[['version']]
-        } else {
-          NA_character_
-        }
+      pkg_versions <- mapply(
+        function(entry, pkg) {
+          version <- if (is.character(entry) && length(entry) == 1) {
+            entry
+          } else if (!is.null(entry[['version']])) {
+            entry[['version']]
+          } else {
+            NA_character_
+          }
 
-        if (!is.na(version)) {
-          cli::format_inline('{.pkg {pkg}} ({.val {version}})')
-        } else {
-          NA_character_
-        }
-      })
+          if (!is.na(version)) {
+            cli::format_inline('{.pkg {pkg}} ({.val {version}})')
+          } else {
+            NA_character_
+          }
+        },
+        deps,
+        names(deps),
+        USE.NAMES = FALSE
+      )
 
       pkg_versions <- pkg_versions[!is.na(pkg_versions)]
 

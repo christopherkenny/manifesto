@@ -42,11 +42,11 @@ manifest_from_loaded <- function(path,
   pkg_info <- Filter(Negate(is.null), pkg_info)
 
   if (!include_base) {
-    base_pkgs <- rownames(installed.packages(priority = 'base'))
+    base_pkgs <- rownames(utils::installed.packages(priority = 'base'))
     pkg_info <- Filter(function(x) !(x$name %in% base_pkgs), pkg_info)
   }
 
-  deps <- setNames(
+  deps <- stats::setNames(
     lapply(pkg_info, function(pkg) list(version = pkg$version)),
     vapply(pkg_info, function(pkg) pkg$name, character(1))
   )

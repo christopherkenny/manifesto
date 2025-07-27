@@ -3,7 +3,7 @@
 #' @param path Path to the TOML manifest file. Defaults to "rproject.toml".
 #' @param groups Optional dependency groups to include. Defaults to NULL (core only).
 #'
-#' @return A `tibble::tibble` reporting installed version, required version, and status.
+#' @return A `data.frame` reporting installed version, required version, and status.
 #' @export
 #'
 #' @examples
@@ -14,7 +14,7 @@ manifest_check <- function(path = 'rproject.toml', groups = NULL) {
 
   pkg_names <- sub('@.*$', '', refs)
   required_versions <- ifelse(grepl('@', refs), sub('^.*?@', '', refs), '*')
-  installed <- as.data.frame(installed.packages()[, c('Package', 'Version')], stringsAsFactors = FALSE)
+  installed <- as.data.frame(utils::installed.packages()[, c('Package', 'Version')], stringsAsFactors = FALSE)
 
   result <- vapply(seq_along(pkg_names), function(i) {
     pkg <- pkg_names[i]
@@ -34,7 +34,7 @@ manifest_check <- function(path = 'rproject.toml', groups = NULL) {
     }
   }, character(2))
 
-  tibble::tibble(
+  data.frame(
     package = pkg_names,
     required = required_versions,
     installed = result[1, ],

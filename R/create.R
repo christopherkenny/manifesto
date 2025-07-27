@@ -6,7 +6,7 @@
 #' @param path File path to write to. If missing, a temporary file will be used.
 #' @param project_name Optional project name. Defaults to `Project`.
 #' @param project_version Optional project version. Defaults to `0.0.1`.
-#' @param manifest_version Optional `manifesto` version. Defaults to the current
+#' @param manifesto_version Optional `manifesto` version. Defaults to the current
 #' package version.
 #' @param r_version Optional R version settings. Defaults to `'*'`.
 #' @param ... Additional named arguments to add to the manifest. These will be

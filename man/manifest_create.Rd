@@ -20,13 +20,13 @@ manifest_create(
 
 \item{project_version}{Optional project version. Defaults to \verb{0.0.1}.}
 
+\item{manifesto_version}{Optional \code{manifesto} version. Defaults to the current
+package version.}
+
 \item{r_version}{Optional R version settings. Defaults to \code{'*'}.}
 
 \item{...}{Additional named arguments to add to the manifest. These will be
 added to the top-level of the TOML file.}
-
-\item{manifest_version}{Optional \code{manifesto} version. Defaults to the current
-package version.}
 }
 \value{
 Invisibly returns the written path.
