@@ -7,7 +7,8 @@
 manifest_from_loaded(
   path,
   include_base = FALSE,
-  min_version = c("loaded", "*")
+  min_version = c("loaded", "*"),
+  r_version = current_r_version()
 )
 }
 \arguments{
@@ -17,6 +18,8 @@ manifest_from_loaded(
 
 \item{min_version}{Whether to require exact loaded versions (\code{'loaded'}, default)
 or allow any version via a wildcard (\code{'*'}).}
+
+\item{r_version}{Optional R version settings. Defaults to \code{current_r_version()}}
 }
 \value{
 Path to the generated TOML file (invisibly).

@@ -4,12 +4,14 @@
 \alias{manifest_from_pak}
 \title{Generate a TOML manifest from a \code{pak} lockfile}
 \usage{
-manifest_from_pak(lockfile = "pkg.lock", path)
+manifest_from_pak(lockfile = "pkg.lock", path, r_version)
 }
 \arguments{
 \item{lockfile}{Path to a \code{pkg.lock} JSON file created by \code{{pak}}.}
 
 \item{path}{Optional path to write the manifest. Defaults to a temporary \code{.toml} file.}
+
+\item{r_version}{Optional R version settings. Defaults to version found in lockfile.}
 }
 \value{
 Path to the generated TOML file (invisibly).

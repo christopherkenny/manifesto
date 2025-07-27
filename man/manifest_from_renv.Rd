@@ -4,12 +4,14 @@
 \alias{manifest_from_renv}
 \title{Generate a TOML manifest from a renv lockfile}
 \usage{
-manifest_from_renv(lockfile = "renv.lock", path)
+manifest_from_renv(lockfile = "renv.lock", path, r_version)
 }
 \arguments{
-\item{lockfile}{Path to a \code{renv.lock} JSON file. Defaults to \code{"renv.lock"}.}
+\item{lockfile}{Path to a \code{renv.lock} JSON file. Defaults to \code{'renv.lock'}.}
 
 \item{path}{Optional path to write the TOML manifest. Defaults to a temporary \code{.toml} file.}
+
+\item{r_version}{Optional R version settings. Defaults to version found in lockfile.}
 }
 \value{
 Path to the generated TOML file (invisibly).

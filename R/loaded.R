@@ -10,15 +10,16 @@
 #' @param include_base Logical. Whether to include base packages. Defaults to FALSE.
 #' @param min_version Whether to require exact loaded versions (`'loaded'`, default)
 #'   or allow any version via a wildcard (`'*'`).
+#' @param r_version Optional R version settings. Defaults to `current_r_version()`
 #'
 #' @return Path to the generated TOML file (invisibly).
 #' @export
 #'
 #' @examples
 #' path <- manifest_from_loaded()
-manifest_from_loaded <- function(path,
-                                 include_base = FALSE,
-                                 min_version = c('loaded', '*')) {
+manifest_from_loaded <- function(
+    path, include_base = FALSE, min_version = c('loaded', '*'),
+    r_version = current_r_version()) {
   min_version <- match.arg(min_version)
 
   if (missing(path)) {
