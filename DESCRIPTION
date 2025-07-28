@@ -22,7 +22,7 @@ Imports:
     jsonlite,
     pak,
     tomledit
-URL: https://github.com/christopherkenny/manifesto
+URL: https://github.com/christopherkenny/manifesto, http://christophertkenny.com/manifesto/
 BugReports: https://github.com/christopherkenny/manifesto/issues
 Suggests: 
     knitr,

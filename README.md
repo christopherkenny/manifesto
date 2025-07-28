@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `manifesto` provides a lightweight, portable way to declare R project
@@ -100,7 +101,7 @@ manifest_install(path = manifest, dry_run = TRUE)
 manifest <- manifest_from_description(
   path = system.file(package = 'manifesto', 'complex.toml')
 )
-readLines(manifest) |> 
+readLines(manifest) |>
   cat(sep = '\n')
 #> [manifesto]
 #> version = "0.0.1"
@@ -117,10 +118,13 @@ readLines(manifest) |>
 #> 
 #> [dependencies]
 #> cli = "*"
+#> jsonlite = "*"
 #> pak = "*"
 #> tomledit = "*"
 #> 
 #> [suggests-dependencies]
+#> knitr = "*"
+#> rmarkdown = "*"
 #> testthat = ">= 3.0.0"
 ```
 
