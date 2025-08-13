@@ -1,5 +1,5 @@
-test_that('`manifest_from_loaded()` creates a TOML file with nonempty [packages]', {
-  path <- manifest_from_loaded()
+test_that('`manifest_from_installed()` creates a TOML file with nonempty entries', {
+  path <- manifest_from_installed()
   expect_true(file.exists(path))
 
   toml <- tomledit::read_toml(path) |> tomledit::from_toml()

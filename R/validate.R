@@ -60,12 +60,10 @@ manifest_validate <- function(path = 'rproject.toml', groups = NULL) {
 
 # Helper function to validate a single dependency entry
 validate_entry <- function(pkg, entry) {
-  # Version-only entry (e.g., dplyr = ">= 1.0.0")
   if (is.character(entry)) {
     return(invisible())
   }
 
-  # Structured entry
   source <- entry$source %||% 'CRAN'
   version <- entry$version %||% NA_character_
   repo <- entry$repo %||% NA_character_
@@ -73,32 +71,27 @@ validate_entry <- function(pkg, entry) {
   url <- entry$url %||% NA_character_
   path <- entry$path %||% NA_character_
 
-  allowed_sources <- c('CRAN', 'bioc', 'github', 'gitlab', 'git', 'url', 'local', 'url')
+  allowed_sources <- c('CRAN', 'bioc', 'github', 'gitlab', 'git', 'url', 'local')
 
-  # Check source
   if (!source %in% allowed_sources) {
     cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
   }
 
-  # Warn for missing repo when likely needed
   if (source %in% c('github', 'gitlab') && is.na(repo)) {
     cli::cli_abort('Package {.strong {pkg}} has source = {source} but no repo field.')
   }
-
   if (source == 'git' && is.na(repo)) {
     cli::cli_warn('Package {.strong {pkg}} from {.val git} is missing a {.field repo} field.')
   }
-
   if (source == 'url' && is.na(url)) {
     cli::cli_warn('Package {.strong {pkg}} from {.val url} is missing a {.field url} field.')
   }
-
   if (source == 'local' && is.na(path)) {
     cli::cli_warn('Package {.strong {pkg}} from {.val local} is missing a {.field path} field.')
   }
 
-  # Soft version check — we accept almost anything that pak accepts
-  if (!is.na(version) && !grepl('^([><=!~]+\\s*)?\\d+(\\.\\d+)*(-[0-9]+)?$', version)) {
+  valid_version_pattern <- '^([><=!~]+\\s*)?\\d+(?:\\.\\d+)*(?:-[0-9]+(?:\\.[0-9]+)*)?$'
+  if (!is.na(version) && !grepl(valid_version_pattern, version)) {
     cli::cli_warn('Version constraint for package {.strong {pkg}} looks unusual: {.val {version}}')
   }
 }
