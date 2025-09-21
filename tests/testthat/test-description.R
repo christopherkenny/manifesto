@@ -16,6 +16,28 @@ test_that('`parse_authors_field()` parses Authors@R correctly', {
   expect_equal(parsed[[1]]$roles, c('aut', 'cre'))
 })
 
+test_that('`parse_authors_field()` handles multiple authors', {
+  field <- 'c(person("Jane", "Doe", email = "jane@example.com", role = "aut"), person("John", "Smith", role = "ctb"))'
+  parsed <- parse_authors_field(field)
+
+  expect_length(parsed, 2)
+  expect_equal(parsed[[2]]$name, 'John Smith')
+})
+
+test_that('`parse_authors_field()` handles missing email', {
+  field <- 'person("Jane", "Doe", role = "aut")'
+  parsed <- parse_authors_field(field)
+
+  expect_null(parsed[[1]]$email)
+})
+
+test_that('`parse_authors_field()` handles malformed input', {
+  field <- 'person(Jane, Doe, email = jane@example.com, role = aut)'
+  parsed <- parse_authors_field(field)
+
+  expect_length(parsed, 0)
+})
+
 test_that('`parse_dependencies()` parses versioned fields', {
   field <- 'dplyr (>= 1.0.0), glue'
   parsed <- parse_dependencies(field)

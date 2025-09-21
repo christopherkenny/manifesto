@@ -3,6 +3,7 @@
 export(all_groups)
 export(current_r_version)
 export(manifest_check)
+export(manifest_check_system)
 export(manifest_create)
 export(manifest_from_description)
 export(manifest_from_installed)

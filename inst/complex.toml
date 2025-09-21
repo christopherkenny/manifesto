@@ -25,3 +25,6 @@ gganimate = { source = "github", repo = "thomasp85/gganimate" }
 [ci-dependencies]
 pkgdown = { source = "github", repo = "r-lib/pkgdown", ref = "v2.0.7" }
 covr = "3.6.2"
+
+[system-dependencies]
+build-essential = "*"

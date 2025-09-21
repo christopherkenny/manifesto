@@ -40,10 +40,7 @@ manifest_from_installed <- function(
     pkg_info <- Filter(function(x) !(x$name %in% base_pkgs), pkg_info)
   }
 
-  deps <- stats::setNames(
-    lapply(pkg_info, function(pkg) list(version = pkg$version)),
-    vapply(pkg_info, function(pkg) pkg$name, character(1))
-  )
+  deps <- create_dependency_list(pkg_info)
 
   manifest_create(
     path = path,

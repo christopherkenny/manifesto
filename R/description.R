@@ -110,15 +110,15 @@ parse_authors_field <- function(authors_field) {
     return(list())
   }
 
-  expr <- tryCatch(parse(text = authors_field)[[1]], error = function(e) NULL)
-  if (is.null(expr)) {
-    return(list())
-  }
-
-  authors <- tryCatch(eval(expr), error = function(e) NULL)
-  if (is.null(authors)) {
-    return(list())
-  }
+  # A safer way to parse the Authors@R field
+  authors <- tryCatch(
+    {
+      eval(parse(text = authors_field))
+    },
+    error = function(e) {
+      list()
+    }
+  )
 
   if (inherits(authors, 'person')) {
     authors <- as.list(authors)

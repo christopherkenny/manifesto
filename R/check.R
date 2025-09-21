@@ -47,24 +47,52 @@ version_satisfies <- function(required, installed) {
     return(TRUE)
   }
 
-  match <- regexec('^([><=!]+)\\s*(\\d+[.-]?\\d*[.-]?\\d*)$', required)
+  # Normalize version separators to dots for consistency
+  required <- gsub('-', '.', required)
+  installed <- gsub('-', '.', installed)
+
+  # Regex to capture operator and version
+  match <- regexec('^([><=!]+)\\s*([0-9][0-9.-]*)', required)
   parts <- regmatches(required, match)[[1]]
-  if (length(parts) != 3) {
-    return(FALSE)
+
+  if (length(parts) < 3) {
+    return(FALSE) # Return FALSE if format is not 'operator version'
   }
 
   op <- parts[2]
   ver <- parts[3]
 
+  # Ensure version strings are valid for comparison
+  if (!grepl('^[0-9.-]+$', ver) || !grepl('^[0-9.-]+$', installed)) {
+    return(FALSE)
+  }
+
   comparison <- utils::compareVersion(installed, ver)
 
-  switch(op,
-    '==' = comparison == 0,
-    '>=' = comparison >= 0,
-    '<=' = comparison <= 0,
-    '>'  = comparison > 0,
-    '<'  = comparison < 0,
-    '!=' = comparison != 0,
-    FALSE
+  # Handle cases where versions have different number of components
+  if (comparison != 0) {
+    ver_parts <- strsplit(ver, '\\.')[[1]]
+    installed_parts <- strsplit(installed, '\\.')[[1]]
+    min_len <- min(length(ver_parts), length(installed_parts))
+    if (all(ver_parts[1:min_len] == installed_parts[1:min_len])) {
+      if (length(ver_parts) > min_len && all(ver_parts[(min_len + 1):length(ver_parts)] == '0')) {
+        comparison <- 0
+      } else if (length(installed_parts) > min_len && all(installed_parts[(min_len + 1):length(installed_parts)] == '0')) {
+        comparison <- 0
+      }
+    }
+  }
+
+  # Perform comparison based on operator
+  result <- switch(op,
+    `==` = comparison == 0,
+    `>=` = comparison >= 0,
+    `<=` = comparison <= 0,
+    `>`  = comparison > 0,
+    `<`  = comparison < 0,
+    `!=` = comparison != 0,
+    FALSE # Default case for unsupported operators
   )
+
+  return(result)
 }
