@@ -1,0 +1,9 @@
+[manifesto]
+version = "0.0.1"
+
+[project]
+name = "myproject"
+version = "1.2.3"
+
+[environment]
+r_version = "4.3.2"

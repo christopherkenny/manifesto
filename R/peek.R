@@ -18,7 +18,7 @@ manifest_peek <- function(path = 'rproject.toml') {
   required_sections <- c('manifesto', 'project', 'environment')
   missing_sections <- setdiff(required_sections, names(manifest))
   if (length(missing_sections) > 0) {
-    cli::cli_warn('Missing expected section(s): {cli::cli_vec(missing_sections, style = "code")}')
+    cli::cli_warn('Missing expected section(s): {.val {missing_sections}}')
   }
 
   cli::cli_ul()
