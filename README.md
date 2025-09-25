@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/christopherkenny/manifesto/graph/badge.svg)](https://app.codecov.io/gh/christopherkenny/manifesto)
 <!-- badges: end -->
 
 `manifesto` provides a lightweight, portable way to declare R project
@@ -114,7 +116,7 @@ readLines(manifest) |>
 #> ]
 #> 
 #> [environment]
-#> r_version = "*"
+#> r_version = ">= 4.2.0"
 #> 
 #> [dependencies]
 #> cli = "*"
