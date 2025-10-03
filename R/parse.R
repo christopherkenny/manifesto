@@ -115,7 +115,8 @@ collect_deps <- function(manifest, section) {
 
   deps <- deps |>
     gsub(pattern = '\\s+', replacement = '', x = _) |>
-    trimws()
+    trimws() |>
+    gsub(pattern = '@\\*$', replacement = '', x = _)
 
   names(deps) <- names(entries)
   deps
