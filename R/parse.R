@@ -25,7 +25,7 @@ manifest_parse <- function(path = 'rproject.toml', groups = NULL) {
   # Include any optional groups
   if (!is.null(groups)) {
     if (length(groups) == 1 && groups == 'all') {
-      groups <- all_groups(path)
+      groups <- manifest_all_groups(path)
     }
 
     for (group in groups) {
@@ -130,8 +130,8 @@ collect_deps <- function(manifest, section) {
 #' @export
 #'
 #' @examples
-#' all_groups(path = system.file(package = 'manifesto', 'minimal.toml'))
-all_groups <- function(path = 'rproject.toml') {
+#' manifest_all_groups(path = system.file(package = 'manifesto', 'minimal.toml'))
+manifest_all_groups <- function(path = 'rproject.toml') {
   manifest <- tomledit::read_toml(path) |>
     tomledit::from_toml()
 
