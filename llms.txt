@@ -1,0 +1,188 @@
+# `manifesto`
+
+`manifesto` provides a lightweight, portable way to declare R project
+environments using a simple `rproject.toml` file.  
+It makes setting up and sharing reproducible R projects faster and more
+reliable. As it is lightweight, it can also be used easily for setting
+up new R installations or for workshops which require packages.
+
+Unlike most reproducibility-ish packages, this is not focused on being
+able to run code under a completely specified environment. It is aimed
+at ensuring the right sets of packages are installed for users and
+workshops.
+
+------------------------------------------------------------------------
+
+## What is `manifesto`?
+
+`manifesto` introduces a human-readable, TOML-based manifest format for
+R projects.  
+It captures:
+
+- Project metadata (name, version, description, authors)
+- Required R version
+- Package dependencies, with version constraints
+- Package sources (CRAN, Bioconductor, GitHub, GitLab, Git, or custom
+  URLs)
+- Optional dependency groups (development, workshop, full install)
+- System dependencies (OS libraries)
+- Install preferences (such as binary vs source installs)
+
+The goal is to simplify project setup across local machines, teams, and
+workshops, without locking users into heavyweight tools.
+
+------------------------------------------------------------------------
+
+## Minimal Example
+
+The smallest valid `rproject.toml` looks like this:
+
+``` toml
+[project]
+name = "MyAnalysis"
+version = "0.0.1"
+
+[manifesto]
+version = "0.1.0"
+
+[environment]
+r_version = ">= 4.4.2"
+
+[dependencies]
+dplyr = ">= 1.0.0"
+```
+
+## Installation
+
+You can install the development version of `manifesto` like so:
+
+``` r
+# install.packages('pak')
+pak::pak('christopherkenny/manifesto')
+```
+
+## Example
+
+For most users, you will only need to use the
+[`manifest_install()`](http://christophertkenny.com/manifesto/reference/manifest_install.md)
+function. This handles organizing and installing packages dound in the
+manifest file. By default, this file is called `rproject.toml`.
+
+Below, we install one of the example manifest files included with the
+package. Note that for the example, `dry_run = TRUE` means that no
+packages will be installed, but details of what would be installed are
+printed to the console.
+
+``` r
+library(manifesto)
+
+manifest <- system.file(package = 'manifesto', 'complex.toml')
+
+manifest_install(path = manifest, dry_run = TRUE)
+#> 
+#> ── Dry run: would install the following 3 packages ──
+#> 
+#> • dplyr@>=1.0.10
+#> • BiocManager@>=1.30.10
+#> • readr@2.1.4
+```
+
+`manifesto` can also be used to create a manifest file from a package’s
+`DESCRIPTION` file.
+
+``` r
+manifest <- manifest_from_description(
+  path = system.file(package = 'manifesto', 'complex.toml')
+)
+readLines(manifest) |>
+  cat(sep = '\n')
+#> [manifesto]
+#> version = "0.0.1"
+#> 
+#> [project]
+#> name = "manifesto"
+#> version = "0.0.1"
+#> authors = [
+#>     { name = "Christopher T. Kenny", email = "christopherkenny@fas.harvard.edu", roles = ["aut", "cre"] }
+#> ]
+#> 
+#> [environment]
+#> r_version = ">= 4.2.0"
+#> 
+#> [dependencies]
+#> cli = "*"
+#> jsonlite = "*"
+#> pak = "*"
+#> tomledit = "*"
+#> 
+#> [suggests-dependencies]
+#> knitr = "*"
+#> rmarkdown = "*"
+#> testthat = ">= 3.0.0"
+```
+
+## License
+
+This package is licensed under the [MIT
+License](http://christophertkenny.com/manifesto/LICENSE.md).
+
+# Package index
+
+## All functions
+
+- [`current_r_version()`](http://christophertkenny.com/manifesto/reference/current_r_version.md)
+  : Get the current R version
+
+- [`manifest_all_groups()`](http://christophertkenny.com/manifesto/reference/manifest_all_groups.md)
+  : Return all defined optional dependency groups in a manifest file
+
+- [`manifest_check()`](http://christophertkenny.com/manifesto/reference/manifest_check.md)
+  : Check if the installed packages match the manifest requirements
+
+- [`manifest_check_system()`](http://christophertkenny.com/manifesto/reference/manifest_check_system.md)
+  : Check for system dependencies
+
+- [`manifest_create()`](http://christophertkenny.com/manifesto/reference/manifest_create.md)
+  : Create a minimal TOML manifest file
+
+- [`manifest_from_description()`](http://christophertkenny.com/manifesto/reference/manifest_from_description.md)
+  : Generate a TOML manifest from a DESCRIPTION file
+
+- [`manifest_from_installed()`](http://christophertkenny.com/manifesto/reference/manifest_from_installed.md)
+  : Generate a TOML manifest from installed packages
+
+- [`manifest_from_loaded()`](http://christophertkenny.com/manifesto/reference/manifest_from_loaded.md)
+  : Generate a TOML manifest from currently loaded packages
+
+- [`manifest_from_pak()`](http://christophertkenny.com/manifesto/reference/manifest_from_pak.md)
+  :
+
+  Generate a TOML manifest from a `pak` lockfile
+
+- [`manifest_from_renv()`](http://christophertkenny.com/manifesto/reference/manifest_from_renv.md)
+  : Generate a TOML manifest from a renv lockfile
+
+- [`manifest_install()`](http://christophertkenny.com/manifesto/reference/manifest_install.md)
+  : Install packages from a manifesto manifest
+
+- [`manifest_parse()`](http://christophertkenny.com/manifesto/reference/manifest_parse.md)
+  : Parse a manifesto manifest file
+
+- [`manifest_peek()`](http://christophertkenny.com/manifesto/reference/manifest_peek.md)
+  : Peek into a manifest file
+
+- [`manifest_to_description()`](http://christophertkenny.com/manifesto/reference/manifest_to_description.md)
+  : Convert a TOML manifest to a DESCRIPTION file
+
+- [`manifest_validate()`](http://christophertkenny.com/manifesto/reference/manifest_validate.md)
+  : Validate a manifesto manifest file
+
+- [`manifest_version()`](http://christophertkenny.com/manifesto/reference/manifest_version.md)
+  : Return the current version of the manifesto package
+
+# Articles
+
+### All vignettes
+
+- [Getting started with
+  \`manifesto\`](http://christophertkenny.com/manifesto/articles/manifesto.md):
