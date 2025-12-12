@@ -16,6 +16,7 @@ manifest_install <- function(path = 'rproject.toml', groups = NULL, dry_run = FA
   manifest_validate(path = path, groups = groups)
 
   refs <- manifest_parse(path = path, groups = groups)
+  refs <- negotiate_ge(refs)
 
   if (length(refs) == 0) {
     cli::cli_alert_danger('No packages to install.')
