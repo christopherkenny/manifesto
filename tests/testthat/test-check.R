@@ -1,3 +1,9 @@
+test_that('`manifest_check()` works', {
+  manifest_path <- testthat::test_path('files', 'many-deps.toml')
+  check <- manifest_check(manifest_path)
+  expect_s3_class(check, 'data.frame')
+})
+
 test_that('`version_satisfies()` works with various operators', {
   # Exact match
   expect_true(version_satisfies('== 1.0.0', '1.0.0'))
