@@ -1,16 +1,16 @@
 #' Generate a TOML manifest from installed packages
 #'
-#' Captures all packages installed on \code{.libPaths()} and generates
-#' a \code{manifesto}-style TOML manifest. Package versions can either reflect
-#' their installed versions, or use a wildcard (\code{*}) to accept any.
+#' Captures all packages installed on `.libPaths()` and generates
+#' a `manifesto`-style TOML manifest. Package versions can either reflect
+#' their installed versions, or use a wildcard (`*`) to accept any.
 #'
 #' Base packages are excluded by default to minimize boilerplate.
 #'
-#' @param path Optional path to write the manifest. If missing, a temporary \code{.toml} file is created.
+#' @param path Optional path to write the manifest. If missing, a temporary `.toml` file is created.
 #' @param include_base Logical. Whether to include base packages. Defaults to FALSE.
-#' @param min_version Whether to require exact installed versions (\code{'installed'}, default)
-#'   or allow any version via a wildcard (\code{'*'}).
-#' @param r_version Optional R version settings. Defaults to \code{current_r_version()}.
+#' @param min_version Whether to require exact installed versions (`'installed'`, default)
+#'   or allow any version via a wildcard (`'*'`).
+#' @param r_version Optional R version settings. Defaults to `current_r_version()`.
 #'
 #' @return Path to the generated TOML file (invisibly).
 #' @export
