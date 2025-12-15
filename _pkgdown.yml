@@ -1,4 +1,32 @@
 url: http://christophertkenny.com/manifesto/
 template:
   bootstrap: 5
-
+reference:
+- title: "Basic usage"
+  desc: >
+    Functions for loading existing files or creating new manifests
+  contents:
+  - manifest_create
+  - manifest_install
+  - manifest_peek
+- title: "Creating new manifest files from other sources"
+  desc: >
+    Functions for creating manifest files using loaded, installed, etc. R packages
+  contents:
+  - manifest_from_description
+  - manifest_from_installed
+  - manifest_from_loaded
+  - manifest_from_pak
+  - manifest_from_renv
+- title: "Helper functions"
+  desc: >
+    Various utility functions for working with manifests
+  contents:
+  - current_r_version
+  - manifest_version
+  - manifest_all_groups
+  - manifest_check
+  - manifest_check_system
+  - manifest_parse
+  - manifest_to_description
+  - manifest_validate
