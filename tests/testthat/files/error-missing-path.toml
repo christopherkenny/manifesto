@@ -5,5 +5,8 @@ version = "0.1.0"
 name = "missing-path"
 version = "0.1.0"
 
+[environment]
+r_version = ">= 4.2.0"
+
 [dependencies]
 devpkg = { source = "local" }

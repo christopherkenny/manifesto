@@ -16,6 +16,40 @@ is_valid_package_name <- function(x) {
   grepl('^[A-Za-z][A-Za-z0-9.]*[A-Za-z0-9]$', x)
 }
 
+#' Extract the package name from a pak-style ref
+#'
+#' Handles standard refs (pkg, pkg@version), GitHub/GitLab (user/repo),
+#' git:: refs, url:: refs, and local:: refs.
+#'
+#' @param ref A single pak-style package reference string.
+#'
+#' @return The extracted package name as a character string.
+#' @noRd
+extract_pkg_name <- function(ref) {
+  # Strip version pinning
+  base <- sub('@.*$', '', ref)
+
+  if (grepl('^git::', base)) {
+    # git::https://github.com/user/repo → extract last path component
+    url <- sub('^git::', '', base)
+    return(basename(url))
+  }
+  if (grepl('^local::', base)) {
+    return(basename(sub('^local::', '', base)))
+  }
+  if (grepl('^url::', base)) {
+    # url::https://...pkg_1.0.0.tar.gz → extract package name from filename
+    fname <- basename(sub('^url::', '', base))
+    return(sub('_.*$', '', fname))
+  }
+  if (grepl('/', base)) {
+    # user/repo style (GitHub/GitLab)
+    return(basename(base))
+  }
+
+  base
+}
+
 #' Create a dependency list from package information
 #
 #' @param pkg_info A list of package information, where each element is a list
@@ -39,9 +73,6 @@ create_dependency_list <- function(pkg_info) {
 #'
 #' @noRd
 negotiate_ge <- function(pkgs) {
-  installed <- utils::installed.packages()
-  cran_db <- tools::CRAN_package_db()
-
   # Only process packages with >= requirement
   has_ge <- grepl('>=', pkgs, fixed = TRUE)
 
@@ -52,19 +83,23 @@ negotiate_ge <- function(pkgs) {
     return(result)
   }
 
+  installed <- utils::installed.packages()
+  cran_db <- tools::CRAN_package_db()
+
   # Process >= packages
   ge_pkgs <- pkgs[has_ge]
 
   for (i in seq_along(ge_pkgs)) {
-    parts <- strsplit(ge_pkgs[i], '>=')[[1]]
-    pkg_name <- trimws(parts[1])
-    min_version <- trimws(parts[2])
+    # Input format is "pkg@>=version" — split on @ first to get the package name
+    at_parts <- strsplit(ge_pkgs[i], '@', fixed = TRUE)[[1]]
+    pkg_name <- at_parts[1]
+    min_version <- trimws(sub('>=', '', paste(at_parts[-1], collapse = '@'), fixed = TRUE))
 
     # Current installed version
     if (pkg_name %in% rownames(installed)) {
       inst_version <- installed[pkg_name, 'Version']
       if (utils::compareVersion(inst_version, min_version) >= 0) {
-        result[has_ge][i] <- paste0(pkg_name, inst_version)
+        result[has_ge][i] <- paste0(pkg_name, '@', inst_version)
         next
       }
     }
@@ -74,13 +109,13 @@ negotiate_ge <- function(pkgs) {
     if (length(cran_version) > 0) {
       cran_version <- cran_version[1]
       if (utils::compareVersion(cran_version, min_version) >= 0) {
-        result[has_ge][i] <- paste0(pkg_name, cran_version)
+        result[has_ge][i] <- paste0(pkg_name, '@', cran_version)
         next
       }
     }
 
     # Minimum required version
-    result[has_ge][i] <- paste0(pkg_name, min_version)
+    result[has_ge][i] <- paste0(pkg_name, '@', min_version)
   }
   result
 }

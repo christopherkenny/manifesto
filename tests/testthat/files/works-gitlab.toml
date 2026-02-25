@@ -5,6 +5,9 @@ version = "0.1.0"
 name = "works-gitlab"
 version = "0.1.0"
 
+[environment]
+r_version = ">= 4.2.0"
+
 [dependencies]
 fs = ">= 1.6.0"
 

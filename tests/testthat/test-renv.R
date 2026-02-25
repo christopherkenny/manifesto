@@ -1,4 +1,4 @@
-test_that('`manifest_from_pak()` creates a valid TOML file', {
+test_that('`manifest_from_renv()` creates a valid TOML file', {
   lockfile <- system.file(package = 'manifesto', 'renv.lock')
 
   path <- manifest_from_renv(

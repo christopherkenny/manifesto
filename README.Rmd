@@ -96,7 +96,7 @@ manifest_install(path = manifest, dry_run = TRUE)
 
 ```{r convert}
 manifest <- manifest_from_description(
-  path = system.file(package = 'manifesto', 'complex.toml')
+  system.file(package = 'cli', 'DESCRIPTION')
 )
 readLines(manifest) |>
   cat(sep = '\n')

@@ -12,7 +12,7 @@ manifest_check <- function(path = 'rproject.toml', groups = NULL) {
   manifest_validate(path, groups = groups)
   refs <- manifest_parse(path, groups = groups)
 
-  pkg_names <- sub('@.*$', '', refs)
+  pkg_names <- vapply(refs, extract_pkg_name, character(1), USE.NAMES = FALSE)
   required_versions <- ifelse(grepl('@', refs), sub('^.*?@', '', refs), '*')
   installed <- as.data.frame(utils::installed.packages()[, c('Package', 'Version')], stringsAsFactors = FALSE)
 

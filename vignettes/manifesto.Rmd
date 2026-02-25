@@ -163,9 +163,9 @@ r_version = ">= 4.2.0"
 dplyr = ">= 1.0.0"
 ggplot2 = "*"
 
-[suggests-dependencies]
-testthat = ">= 3.0.0"
-devtools = "*"
+[dev-dependencies]
+testthat = ">= 3.1.0"
+lintr = "*"
 
 [ci-dependencies]
 pkgdown = "*"

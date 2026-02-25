@@ -52,7 +52,7 @@ manifest_from_loaded <- function(
   manifest_create(
     path = path,
     dependencies = deps,
-    r_version = current_r_version()
+    r_version = r_version
   )
 
   invisible(path)

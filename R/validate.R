@@ -36,6 +36,17 @@ manifest_validate <- function(path = 'rproject.toml', groups = NULL) {
     ))
   }
 
+  # ---- Required section checks ----
+  if (is.null(manifest$project$name)) {
+    cli::cli_abort('Missing {.field [project].name} field in the manifest.')
+  }
+  if (is.null(manifest$project$version)) {
+    cli::cli_abort('Missing {.field [project].version} field in the manifest.')
+  }
+  if (is.null(manifest$environment$r_version)) {
+    cli::cli_abort('Missing {.field [environment].r_version} field in the manifest.')
+  }
+
   # ---- Dependency validation ----
   if ('all-dependencies' %in% names(manifest)) {
     cli::cli_warn(c(

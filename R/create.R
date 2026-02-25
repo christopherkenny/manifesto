@@ -43,7 +43,6 @@ manifest_create <- function(path,
   )
 
   extras <- list(...)
-  extras <- extras[!vapply(names(extras), is.null, logical(1))]
 
   if (any(names(extras) == '' | is.null(names(extras)))) {
     cli::cli_abort('All additional arguments to `manifest_create()` must be named.')

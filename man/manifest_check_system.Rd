@@ -16,3 +16,7 @@ A \code{data.frame} reporting the system dependency, and its status.
 This function checks for the presence of system dependencies listed in the
 \verb{[system-dependencies]} section of the manifest file.
 }
+\examples{
+path <- manifest_create(`system-dependencies` = list(git = '*'))
+manifest_check_system(path)
+}

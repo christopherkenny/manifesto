@@ -5,6 +5,9 @@ version = "0.1.0"
 name = "local-dev-test"
 version = "0.1.0"
 
+[environment]
+r_version = ">= 4.2.0"
+
 [dependencies]
 readr = ">= 2.1.4"
 

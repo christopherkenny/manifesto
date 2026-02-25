@@ -6,6 +6,10 @@
 #' @param path Path to the `rproject.toml` file.
 #' @return A `data.frame` reporting the system dependency, and its status.
 #' @export
+#'
+#' @examples
+#' path <- manifest_create(`system-dependencies` = list(git = '*'))
+#' manifest_check_system(path)
 manifest_check_system <- function(path = 'rproject.toml') {
   manifest <- tomledit::read_toml(path) |>
     tomledit::from_toml()

@@ -26,13 +26,11 @@
 
     Code
       manifest_peek(file)
-    Condition
-      Warning:
-      Missing expected section(s): "environment"
     Message
       * Manifesto version: "0.1.0"
       * Project name: "dedup-test"
       * Project version: "0.1.0"
+      * Required R version: ">= 4.2.0"
       Dependencies:
         * default: fs (">= 1.6.0")
         * dev: glue (">= 1.6.2")

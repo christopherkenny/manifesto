@@ -5,6 +5,9 @@ version = "0.1.0"
 name = "works-url"
 version = "0.1.0"
 
+[environment]
+r_version = ">= 4.2.0"
+
 [dependencies]
 cli = ">= 3.6.0"
 
