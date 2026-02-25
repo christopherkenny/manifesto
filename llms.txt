@@ -82,8 +82,8 @@ manifest_install(path = manifest, dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 3 packages ──
 #> 
-#> • dplyr@>=1.0.10
-#> • BiocManager@>=1.30.10
+#> • dplyr@1.2.0
+#> • BiocManager@1.30.27
 #> • readr@2.1.4
 ```
 
@@ -92,7 +92,7 @@ manifest_install(path = manifest, dry_run = TRUE)
 
 ``` r
 manifest <- manifest_from_description(
-  path = system.file(package = 'manifesto', 'complex.toml')
+  system.file(package = 'cli', 'DESCRIPTION')
 )
 readLines(manifest) |>
   cat(sep = '\n')
@@ -100,25 +100,45 @@ readLines(manifest) |>
 #> version = "0.0.1"
 #> 
 #> [project]
-#> name = "manifesto"
-#> version = "0.0.1"
+#> name = "cli"
+#> version = "3.6.5"
 #> authors = [
-#>     { name = "Christopher T. Kenny", email = "christopherkenny@fas.harvard.edu", roles = ["aut", "cre"] }
+#>     { name = "Gábor Csárdi", email = "gabor@posit.co", roles = ["aut", "cre"] },
+#>     { name = "Hadley Wickham", roles = "ctb" },
+#>     { name = "Kirill Müller", roles = "ctb" },
+#>     { name = "Salim Brüggemann", email = "salim-b@pm.me", roles = "ctb" },
+#>     { name = "Posit Software, PBC", roles = ["cph", "fnd"] }
 #> ]
 #> 
 #> [environment]
-#> r_version = ">= 4.2.0"
+#> r_version = ">= 3.4"
 #> 
 #> [dependencies]
-#> cli = "*"
-#> jsonlite = "*"
-#> pak = "*"
-#> tomledit = "*"
+#> utils = "*"
 #> 
 #> [suggests-dependencies]
+#> callr = "*"
+#> covr = "*"
+#> crayon = "*"
+#> digest = "*"
+#> glue = ">= 1.6.0"
+#> grDevices = "*"
+#> htmltools = "*"
+#> htmlwidgets = "*"
 #> knitr = "*"
+#> methods = "*"
+#> processx = "*"
+#> ps = """
+#> >=
+#> 1.3.4.9000"""
+#> rlang = ">= 1.0.2.9003"
 #> rmarkdown = "*"
-#> testthat = ">= 3.0.0"
+#> rprojroot = "*"
+#> rstudioapi = "*"
+#> testthat = ">= 3.2.0"
+#> tibble = "*"
+#> whoami = "*"
+#> withr = "*"
 ```
 
 ## License

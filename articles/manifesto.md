@@ -54,8 +54,8 @@ manifest_install(manifest_path, dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 3 packages ──
 #> 
-#> • dplyr@1.0.10
-#> • BiocManager@1.30.10
+#> • dplyr@1.2.0
+#> • BiocManager@1.30.27
 #> • readr@2.1.4
 ```
 
@@ -66,7 +66,7 @@ manifest_install(manifest_path, dry_run = TRUE)
 ``` r
 path <- manifest_create()
 path
-#> [1] "/tmp/RtmpTQdYGY/file1a982cee39aa.toml"
+#> [1] "/tmp/Rtmpthry70/file1ee033f55bce.toml"
 ```
 
     #> [manifesto]
@@ -171,9 +171,9 @@ r_version = ">= 4.2.0"
 dplyr = ">= 1.0.0"
 ggplot2 = "*"
 
-[suggests-dependencies]
-testthat = ">= 3.0.0"
-devtools = "*"
+[dev-dependencies]
+testthat = ">= 3.1.0"
+lintr = "*"
 
 [ci-dependencies]
 pkgdown = "*"
@@ -319,10 +319,10 @@ manifest_install(manifest, groups = 'dev', dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 5 packages ──
 #> 
-#> • dplyr@1.0.0
+#> • dplyr@1.2.0
 #> • ggplot2
 #> • glue
-#> • testthat@3.1.0
+#> • testthat@3.3.2
 #> • lintr
 ```
 
@@ -343,10 +343,10 @@ manifest_install(manifest, groups = 'all', dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 5 packages ──
 #> 
-#> • dplyr@1.0.0
+#> • dplyr@1.2.0
 #> • ggplot2
 #> • glue
-#> • testthat@3.1.0
+#> • testthat@3.3.2
 #> • lintr
 ```
 

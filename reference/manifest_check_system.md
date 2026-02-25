@@ -18,3 +18,12 @@ manifest_check_system(path = "rproject.toml")
 ## Value
 
 A `data.frame` reporting the system dependency, and its status.
+
+## Examples
+
+``` r
+path <- manifest_create(`system-dependencies` = list(git = '*'))
+manifest_check_system(path)
+#>     dependency status
+#> git        git     OK
+```

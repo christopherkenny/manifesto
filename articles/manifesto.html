@@ -98,8 +98,8 @@ CRAN:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Dry run: would install the following 3 packages</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; • dplyr@1.0.10</span></span>
-<span><span class="co">#&gt; • BiocManager@1.30.10</span></span>
+<span><span class="co">#&gt; • dplyr@1.2.0</span></span>
+<span><span class="co">#&gt; • BiocManager@1.30.27</span></span>
 <span><span class="co">#&gt; • readr@2.1.4</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -111,7 +111,7 @@ CRAN:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/manifest_create.html">manifest_create</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">path</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpTQdYGY/file1a982cee39aa.toml"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/Rtmpthry70/file1ee033f55bce.toml"</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; [manifesto]</span></span>
 <span><span class="co">#&gt; version = "0.0.1"</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -211,9 +211,9 @@ testing, or CI. We can do this by passing additional named arguments to
 <span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="dt">dplyr</span> <span class="op">=</span> <span class="st">"&gt;= 1.0.0"</span></span>
 <span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="dt">ggplot2</span> <span class="op">=</span> <span class="st">"*"</span></span>
 <span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="kw">[suggests-dependencies]</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="dt">testthat</span> <span class="op">=</span> <span class="st">"&gt;= 3.0.0"</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="dt">devtools</span> <span class="op">=</span> <span class="st">"*"</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="kw">[dev-dependencies]</span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="dt">testthat</span> <span class="op">=</span> <span class="st">"&gt;= 3.1.0"</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="dt">lintr</span> <span class="op">=</span> <span class="st">"*"</span></span>
 <span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a></span>
 <span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="kw">[ci-dependencies]</span></span>
 <span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="dt">pkgdown</span> <span class="op">=</span> <span class="st">"*"</span></span></code></pre></div>
@@ -349,10 +349,10 @@ and <code>ggplot2</code>, with development tools like
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Dry run: would install the following 5 packages</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; • dplyr@1.0.0</span></span>
+<span><span class="co">#&gt; • dplyr@1.2.0</span></span>
 <span><span class="co">#&gt; • ggplot2</span></span>
 <span><span class="co">#&gt; • glue</span></span>
-<span><span class="co">#&gt; • testthat@3.1.0</span></span>
+<span><span class="co">#&gt; • testthat@3.3.2</span></span>
 <span><span class="co">#&gt; • lintr</span></span></code></pre></div>
 <p>This installs everything from <code>[dependencies]</code> and
 <code>[dev-dependencies]</code>. Here, for CRAN purposes,
@@ -372,10 +372,10 @@ to install everything in the manifest.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── <span style="font-weight: bold;">Dry run: would install the following 5 packages</span> ──</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; • dplyr@1.0.0</span></span>
+<span><span class="co">#&gt; • dplyr@1.2.0</span></span>
 <span><span class="co">#&gt; • ggplot2</span></span>
 <span><span class="co">#&gt; • glue</span></span>
-<span><span class="co">#&gt; • testthat@3.1.0</span></span>
+<span><span class="co">#&gt; • testthat@3.3.2</span></span>
 <span><span class="co">#&gt; • lintr</span></span></code></pre></div>
 <p>By default, only <code>[dependencies]</code> is installed, whereas
 <code>all</code> installs everything.</p>

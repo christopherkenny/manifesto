@@ -39,5 +39,5 @@ manifest_install(
 #> 
 #> ── Dry run: would install the following 1 packages ──
 #> 
-#> • dplyr@1.0.0
+#> • dplyr@1.2.0
 ```
