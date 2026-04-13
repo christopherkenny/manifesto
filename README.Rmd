@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/christopherkenny/manifesto/graph/badge.svg)](https://app.codecov.io/gh/christopherkenny/manifesto)
 <!-- badges: end -->
 
-`manifesto` provides a lightweight, portable way to declare R project environments using a simple `rproject.toml` file.  
+`manifesto` provides a lightweight, portable way to declare R project environments using a simple `rproject.toml` file.
 It makes setting up and sharing reproducible R projects faster and more reliable.
 As it is lightweight, it can also be used easily for setting up new R installations or for workshops which require packages.
 
@@ -31,7 +31,7 @@ It is aimed at ensuring the right sets of packages are installed for users and w
 
 ## What is `manifesto`?
 
-`manifesto` introduces a human-readable, TOML-based manifest format for R projects.  
+`manifesto` introduces a human-readable, TOML-based manifest format for R projects.
 It captures:
 
 - Project metadata (name, version, description, authors)
@@ -101,8 +101,3 @@ manifest <- manifest_from_description(
 readLines(manifest) |>
   cat(sep = '\n')
 ```
-
-
-## License
-
-This package is licensed under the [MIT License](LICENSE.md).
