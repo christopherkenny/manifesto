@@ -1,10 +1,10 @@
 # `manifesto`
 
 `manifesto` provides a lightweight, portable way to declare R project
-environments using a simple `rproject.toml` file.  
-It makes setting up and sharing reproducible R projects faster and more
-reliable. As it is lightweight, it can also be used easily for setting
-up new R installations or for workshops which require packages.
+environments using a simple `rproject.toml` file. It makes setting up
+and sharing reproducible R projects faster and more reliable. As it is
+lightweight, it can also be used easily for setting up new R
+installations or for workshops which require packages.
 
 Unlike most reproducibility-ish packages, this is not focused on being
 able to run code under a completely specified environment. It is aimed
@@ -16,8 +16,7 @@ workshops.
 ## What is `manifesto`?
 
 `manifesto` introduces a human-readable, TOML-based manifest format for
-R projects.  
-It captures:
+R projects. It captures:
 
 - Project metadata (name, version, description, authors)
 - Required R version
@@ -140,8 +139,3 @@ readLines(manifest) |>
 #> whoami = "*"
 #> withr = "*"
 ```
-
-## License
-
-This package is licensed under the [MIT
-License](http://christophertkenny.com/manifesto/LICENSE.md).
