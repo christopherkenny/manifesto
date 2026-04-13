@@ -17,5 +17,5 @@ A character string representing the full R version.
 
 ``` r
 current_r_version()
-#> [1] "4.5.2"
+#> [1] "4.5.3"
 ```

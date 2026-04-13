@@ -54,7 +54,7 @@ manifest_install(manifest_path, dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 3 packages ──
 #> 
-#> • dplyr@1.2.0
+#> • dplyr@1.2.1
 #> • BiocManager@1.30.27
 #> • readr@2.1.4
 ```
@@ -66,7 +66,7 @@ manifest_install(manifest_path, dry_run = TRUE)
 ``` r
 path <- manifest_create()
 path
-#> [1] "/tmp/Rtmpthry70/file1ee033f55bce.toml"
+#> [1] "/tmp/RtmprEImuw/file1c98c73b7d.toml"
 ```
 
     #> [manifesto]
@@ -319,7 +319,7 @@ manifest_install(manifest, groups = 'dev', dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 5 packages ──
 #> 
-#> • dplyr@1.2.0
+#> • dplyr@1.2.1
 #> • ggplot2
 #> • glue
 #> • testthat@3.3.2
@@ -343,7 +343,7 @@ manifest_install(manifest, groups = 'all', dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 5 packages ──
 #> 
-#> • dplyr@1.2.0
+#> • dplyr@1.2.1
 #> • ggplot2
 #> • glue
 #> • testthat@3.3.2
@@ -402,7 +402,7 @@ manifest_from_description(
     #> 
     #> [project]
     #> name = "cli"
-    #> version = "3.6.5"
+    #> version = "3.6.6"
     #> authors = [
     #>     { name = "Gábor Csárdi", email = "gabor@posit.co", roles = ["aut", "cre"] },
     #>     { name = "Hadley Wickham", roles = "ctb" },
@@ -457,7 +457,7 @@ manifest_to_description(manifest_desc, out = description_path)
 ```
 
     #> Package: cli
-    #> Version: 3.6.5
+    #> Version: 3.6.6
     #> Title: TODO Title
     #> Description: TODO Description
     #> License: TODO License
