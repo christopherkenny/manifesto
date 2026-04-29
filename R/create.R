@@ -20,12 +20,14 @@
 #'   dependencies = list(dplyr = '>= 1.0.0'),
 #'   'suggests-dependencies' = list(testthat = '>= 3.0.0')
 #' )
-manifest_create <- function(path,
-                            project_name = 'Project',
-                            project_version = '0.0.1',
-                            manifesto_version = manifest_version(),
-                            r_version = '*',
-                            ...) {
+manifest_create <- function(
+  path,
+  project_name = 'Project',
+  project_version = '0.0.1',
+  manifesto_version = manifest_version(),
+  r_version = '*',
+  ...
+) {
   if (missing(path)) {
     path <- tempfile(fileext = '.toml')
   }
@@ -45,7 +47,9 @@ manifest_create <- function(path,
   extras <- list(...)
 
   if (any(names(extras) == '' | is.null(names(extras)))) {
-    cli::cli_abort('All additional arguments to `manifest_create()` must be named.')
+    cli::cli_abort(
+      'All additional arguments to `manifest_create()` must be named.'
+    )
   }
 
   for (name in names(extras)) {

@@ -1,3 +1,10 @@
+## Resubmission
+
+This is a resubmission. In this version, I have:
+
+* Removed the use of `installed.packages()` in favor of using `find.packages()`.
+* Verified that no packages are installed during examples, testing, or vignettes: all functions that could install are set to use the dry run which instead prints information on what *would have been* installed.
+
 ## Test environments
 
 * local R installation (Windows 11), R 4.5.3

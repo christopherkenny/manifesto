@@ -15,7 +15,11 @@
 #'
 #' @examples
 #' path <- manifest_from_description(system.file(package = 'cli', 'DESCRIPTION'))
-manifest_from_description <- function(description = 'DESCRIPTION', path, include_empty_groups = FALSE) {
+manifest_from_description <- function(
+  description = 'DESCRIPTION',
+  path,
+  include_empty_groups = FALSE
+) {
   desc <- parse_description(description)
 
   if (missing(path)) {
@@ -61,12 +65,15 @@ manifest_from_description <- function(description = 'DESCRIPTION', path, include
   # Create and write manifest
   do.call(
     manifest_create,
-    c(list(
-      path = path,
-      project_name = name,
-      project_version = version,
-      r_version = r_version
-    ), extras)
+    c(
+      list(
+        path = path,
+        project_name = name,
+        project_version = version,
+        r_version = r_version
+      ),
+      extras
+    )
   )
 }
 
@@ -164,7 +171,9 @@ parse_r_version <- function(dep_field) {
     return('*')
   }
 
-  match <- regmatches(r_line, regexec('R\\s*\\(\\s*([^)]+)\\s*\\)', r_line))[[1]]
+  match <- regmatches(r_line, regexec('R\\s*\\(\\s*([^)]+)\\s*\\)', r_line))[[
+    1
+  ]]
   if (length(match) >= 2) {
     return(match[2])
   }
@@ -189,7 +198,10 @@ parse_r_version <- function(dep_field) {
 #'   path = system.file('minimal.toml', package = 'manifesto'),
 #'   out = out
 #' )
-manifest_to_description <- function(path = 'rproject.toml', out = 'DESCRIPTION') {
+manifest_to_description <- function(
+  path = 'rproject.toml',
+  out = 'DESCRIPTION'
+) {
   manifest <- tomledit::read_toml(path) |>
     tomledit::from_toml()
 
@@ -221,10 +233,15 @@ manifest_to_description <- function(path = 'rproject.toml', out = 'DESCRIPTION')
   }
 
   # Optional groups
-  optional_sections <- c('suggests-dependencies', 'linkingto-dependencies', 'enhances-dependencies')
+  optional_sections <- c(
+    'suggests-dependencies',
+    'linkingto-dependencies',
+    'enhances-dependencies'
+  )
   for (section in optional_sections) {
     if (!is.null(manifest[[section]])) {
-      field <- switch(section,
+      field <- switch(
+        section,
         'suggests-dependencies' = 'Suggests',
         'linkingto-dependencies' = 'LinkingTo',
         'enhances-dependencies' = 'Enhances'
@@ -243,25 +260,29 @@ authors_to_r <- function(authors) {
     return(NULL)
   }
 
-  people <- vapply(authors, function(x) {
-    name <- x$name %||% 'TODO'
-    name_parts <- strsplit(name, '\\s+')[[1]]
-    given <- paste(name_parts[-length(name_parts)], collapse = ' ')
-    family <- name_parts[length(name_parts)]
+  people <- vapply(
+    authors,
+    function(x) {
+      name <- x$name %||% 'TODO'
+      name_parts <- strsplit(name, '\\s+')[[1]]
+      given <- paste(name_parts[-length(name_parts)], collapse = ' ')
+      family <- name_parts[length(name_parts)]
 
-    email <- x$email %||% NULL
-    roles <- x$roles %||% 'aut'
+      email <- x$email %||% NULL
+      roles <- x$roles %||% 'aut'
 
-    person <- sprintf(
-      'person(%s, %s%s, role = c(%s))',
-      dquote(given),
-      dquote(family),
-      if (!is.null(email)) paste0(', email = ', dquote(email)) else '',
-      paste(dquote(roles), collapse = ', ')
-    )
+      person <- sprintf(
+        'person(%s, %s%s, role = c(%s))',
+        dquote(given),
+        dquote(family),
+        if (!is.null(email)) paste0(', email = ', dquote(email)) else '',
+        paste(dquote(roles), collapse = ', ')
+      )
 
-    person
-  }, character(1))
+      person
+    },
+    character(1)
+  )
 
   paste0('c(\n  ', paste(people, collapse = ',\n  '), '\n)')
 }
@@ -271,14 +292,18 @@ deps_to_field <- function(deps) {
     return(NULL)
   }
 
-  entries <- vapply(names(deps), function(pkg) {
-    version <- deps[[pkg]]
-    if (identical(version, '*')) {
-      pkg
-    } else {
-      sprintf('%s (%s)', pkg, version)
-    }
-  }, character(1))
+  entries <- vapply(
+    names(deps),
+    function(pkg) {
+      version <- deps[[pkg]]
+      if (identical(version, '*')) {
+        pkg
+      } else {
+        sprintf('%s (%s)', pkg, version)
+      }
+    },
+    character(1)
+  )
 
   paste(entries, collapse = ',\n    ')
 }

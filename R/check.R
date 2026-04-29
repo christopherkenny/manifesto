@@ -14,25 +14,27 @@ manifest_check <- function(path = 'rproject.toml', groups = NULL) {
 
   pkg_names <- vapply(refs, extract_pkg_name, character(1), USE.NAMES = FALSE)
   required_versions <- ifelse(grepl('@', refs), sub('^.*?@', '', refs), '*')
-  installed <- as.data.frame(utils::installed.packages()[, c('Package', 'Version')], stringsAsFactors = FALSE)
 
-  result <- vapply(seq_along(pkg_names), function(i) {
-    pkg <- pkg_names[i]
-    req <- required_versions[i]
-    found <- installed[installed$Package == pkg, 'Version']
+  result <- vapply(
+    seq_along(pkg_names),
+    function(i) {
+      pkg <- pkg_names[i]
+      req <- required_versions[i]
 
-    if (length(found) == 0) {
-      return(c(NA, 'MISSING'))
-    }
+      if (length(find.package(pkg, quiet = TRUE)) == 0) {
+        return(c(NA_character_, 'MISSING'))
+      }
 
-    inst <- found[1]
+      inst <- as.character(utils::packageVersion(pkg))
 
-    if (version_satisfies(req, inst)) {
-      return(c(inst, 'OK'))
-    } else {
-      return(c(inst, 'VERSION MISMATCH'))
-    }
-  }, character(2))
+      if (version_satisfies(req, inst)) {
+        return(c(inst, 'OK'))
+      } else {
+        return(c(inst, 'VERSION MISMATCH'))
+      }
+    },
+    character(2)
+  )
 
   data.frame(
     package = pkg_names,
@@ -75,21 +77,28 @@ version_satisfies <- function(required, installed) {
     installed_parts <- strsplit(installed, '\\.')[[1]]
     min_len <- min(length(ver_parts), length(installed_parts))
     if (all(ver_parts[1:min_len] == installed_parts[1:min_len])) {
-      if (length(ver_parts) > min_len && all(ver_parts[(min_len + 1):length(ver_parts)] == '0')) {
+      if (
+        length(ver_parts) > min_len &&
+          all(ver_parts[(min_len + 1):length(ver_parts)] == '0')
+      ) {
         comparison <- 0
-      } else if (length(installed_parts) > min_len && all(installed_parts[(min_len + 1):length(installed_parts)] == '0')) {
+      } else if (
+        length(installed_parts) > min_len &&
+          all(installed_parts[(min_len + 1):length(installed_parts)] == '0')
+      ) {
         comparison <- 0
       }
     }
   }
 
   # Perform comparison based on operator
-  result <- switch(op,
+  result <- switch(
+    op,
     `==` = comparison == 0,
     `>=` = comparison >= 0,
     `<=` = comparison <= 0,
-    `>`  = comparison > 0,
-    `<`  = comparison < 0,
+    `>` = comparison > 0,
+    `<` = comparison < 0,
     `!=` = comparison != 0,
     FALSE # Default case for unsupported operators
   )

@@ -18,8 +18,11 @@
 #' @examples
 #' path <- manifest_from_loaded()
 manifest_from_loaded <- function(
-    path, include_base = FALSE, min_version = c('loaded', '*'),
-    r_version = current_r_version()) {
+  path,
+  include_base = FALSE,
+  min_version = c('loaded', '*'),
+  r_version = current_r_version()
+) {
   min_version <- match.arg(min_version)
 
   if (missing(path)) {
@@ -36,15 +39,15 @@ manifest_from_loaded <- function(
 
     list(
       name = desc$Package,
-      version = if (min_version == 'loaded') desc$Version else '*'
+      version = if (min_version == 'loaded') desc$Version else '*',
+      priority = desc$Priority
     )
   })
 
   pkg_info <- Filter(Negate(is.null), pkg_info)
 
   if (!include_base) {
-    base_pkgs <- rownames(utils::installed.packages(priority = 'base'))
-    pkg_info <- Filter(function(x) !(x$name %in% base_pkgs), pkg_info)
+    pkg_info <- Filter(function(x) !isTRUE(x$priority == 'base'), pkg_info)
   }
 
   deps <- create_dependency_list(pkg_info)

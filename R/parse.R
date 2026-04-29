@@ -74,7 +74,9 @@ collect_deps <- function(manifest, section) {
         }
       } else if (source %in% c('github', 'gitlab')) {
         if (is.null(repo)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = {source} but no repo field.')
+          cli::cli_abort(
+            'Package {.strong {pkg}} has source = {source} but no repo field.'
+          )
         }
 
         if (!is.null(ref)) {
@@ -84,7 +86,9 @@ collect_deps <- function(manifest, section) {
         }
       } else if (source == 'git') {
         if (is.null(repo)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = git but no repo (URL) specified.')
+          cli::cli_abort(
+            'Package {.strong {pkg}} has source = git but no repo (URL) specified.'
+          )
         }
 
         ref_string <- paste0('git::', repo)
@@ -95,18 +99,24 @@ collect_deps <- function(manifest, section) {
         deps[[pkg]] <- ref_string
       } else if (source == 'url') {
         if (is.null(url)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = url but no url field specified.')
+          cli::cli_abort(
+            'Package {.strong {pkg}} has source = url but no url field specified.'
+          )
         }
 
         deps[[pkg]] <- paste0('url::', url)
       } else if (source == 'local') {
         if (is.null(path)) {
-          cli::cli_abort('Package {.strong {pkg}} has source = local but no repo (path) specified.')
+          cli::cli_abort(
+            'Package {.strong {pkg}} has source = local but no repo (path) specified.'
+          )
         }
 
         deps[[pkg]] <- paste0('local::', path)
       } else {
-        cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
+        cli::cli_abort(
+          'Unsupported source {.val {source}} for package {.strong {pkg}}.'
+        )
       }
     } else {
       cli::cli_warn('Skipping invalid entry for package {.strong {pkg}}.')

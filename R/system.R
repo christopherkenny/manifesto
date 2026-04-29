@@ -21,14 +21,18 @@ manifest_check_system <- function(path = 'rproject.toml') {
     return(invisible(data.frame()))
   }
 
-  results <- vapply(names(sys_deps), function(dep) {
-    status <- if (Sys.which(dep) != '') {
-      'OK'
-    } else {
-      'MISSING'
-    }
-    c(dep, status)
-  }, character(2))
+  results <- vapply(
+    names(sys_deps),
+    function(dep) {
+      status <- if (Sys.which(dep) != '') {
+        'OK'
+      } else {
+        'MISSING'
+      }
+      c(dep, status)
+    },
+    character(2)
+  )
 
   data.frame(
     dependency = results[1, ],

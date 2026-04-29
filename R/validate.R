@@ -19,7 +19,9 @@ manifest_validate <- function(path = 'rproject.toml', groups = NULL) {
   # ---- Manifest version check ----
   expected_major <- '0'
   if (is.null(manifest$manifesto$version)) {
-    cli::cli_abort('Missing {.field [manifesto].version} field in the manifest.')
+    cli::cli_abort(
+      'Missing {.field [manifesto].version} field in the manifest.'
+    )
   }
 
   version_string <- manifest$manifesto$version
@@ -44,7 +46,9 @@ manifest_validate <- function(path = 'rproject.toml', groups = NULL) {
     cli::cli_abort('Missing {.field [project].version} field in the manifest.')
   }
   if (is.null(manifest$environment$r_version)) {
-    cli::cli_abort('Missing {.field [environment].r_version} field in the manifest.')
+    cli::cli_abort(
+      'Missing {.field [environment].r_version} field in the manifest.'
+    )
   }
 
   # ---- Dependency validation ----
@@ -59,7 +63,9 @@ manifest_validate <- function(path = 'rproject.toml', groups = NULL) {
   sections <- c('dependencies', paste0(groups, '-dependencies'))
   for (section in sections) {
     deps <- manifest[[section]]
-    if (is.null(deps)) next
+    if (is.null(deps)) {
+      next
+    }
 
     for (pkg in names(deps)) {
       validate_entry(pkg, deps[[pkg]])
@@ -82,27 +88,47 @@ validate_entry <- function(pkg, entry) {
   url <- entry$url %||% NA_character_
   path <- entry$path %||% NA_character_
 
-  allowed_sources <- c('CRAN', 'bioc', 'github', 'gitlab', 'git', 'url', 'local')
+  allowed_sources <- c(
+    'CRAN',
+    'bioc',
+    'github',
+    'gitlab',
+    'git',
+    'url',
+    'local'
+  )
 
   if (!source %in% allowed_sources) {
-    cli::cli_abort('Unsupported source {.val {source}} for package {.strong {pkg}}.')
+    cli::cli_abort(
+      'Unsupported source {.val {source}} for package {.strong {pkg}}.'
+    )
   }
 
   if (source %in% c('github', 'gitlab') && is.na(repo)) {
-    cli::cli_abort('Package {.strong {pkg}} has source = {source} but no repo field.')
+    cli::cli_abort(
+      'Package {.strong {pkg}} has source = {source} but no repo field.'
+    )
   }
   if (source == 'git' && is.na(repo)) {
-    cli::cli_warn('Package {.strong {pkg}} from {.val git} is missing a {.field repo} field.')
+    cli::cli_warn(
+      'Package {.strong {pkg}} from {.val git} is missing a {.field repo} field.'
+    )
   }
   if (source == 'url' && is.na(url)) {
-    cli::cli_warn('Package {.strong {pkg}} from {.val url} is missing a {.field url} field.')
+    cli::cli_warn(
+      'Package {.strong {pkg}} from {.val url} is missing a {.field url} field.'
+    )
   }
   if (source == 'local' && is.na(path)) {
-    cli::cli_warn('Package {.strong {pkg}} from {.val local} is missing a {.field path} field.')
+    cli::cli_warn(
+      'Package {.strong {pkg}} from {.val local} is missing a {.field path} field.'
+    )
   }
 
   valid_version_pattern <- '^([><=!~]+\\s*)?\\d+(?:\\.\\d+)*(?:-[0-9]+(?:\\.[0-9]+)*)?$'
   if (!is.na(version) && !grepl(valid_version_pattern, version)) {
-    cli::cli_warn('Version constraint for package {.strong {pkg}} looks unusual: {.val {version}}')
+    cli::cli_warn(
+      'Version constraint for package {.strong {pkg}} looks unusual: {.val {version}}'
+    )
   }
 }

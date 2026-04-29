@@ -83,7 +83,6 @@ negotiate_ge <- function(pkgs) {
     return(result)
   }
 
-  installed <- utils::installed.packages()
   cran_db <- tools::CRAN_package_db()
 
   # Process >= packages
@@ -93,11 +92,16 @@ negotiate_ge <- function(pkgs) {
     # Input format is "pkg@>=version" — split on @ first to get the package name
     at_parts <- strsplit(ge_pkgs[i], '@', fixed = TRUE)[[1]]
     pkg_name <- at_parts[1]
-    min_version <- trimws(sub('>=', '', paste(at_parts[-1], collapse = '@'), fixed = TRUE))
+    min_version <- trimws(sub(
+      '>=',
+      '',
+      paste(at_parts[-1], collapse = '@'),
+      fixed = TRUE
+    ))
 
     # Current installed version
-    if (pkg_name %in% rownames(installed)) {
-      inst_version <- installed[pkg_name, 'Version']
+    if (length(find.package(pkg_name, quiet = TRUE)) > 0) {
+      inst_version <- as.character(utils::packageVersion(pkg_name))
       if (utils::compareVersion(inst_version, min_version) >= 0) {
         result[has_ge][i] <- paste0(pkg_name, '@', inst_version)
         next

@@ -18,26 +18,44 @@
 #' @examples
 #' path <- manifest_from_installed()
 manifest_from_installed <- function(
-    path, include_base = FALSE, min_version = c('installed', '*'),
-    r_version = current_r_version()) {
+  path,
+  include_base = FALSE,
+  min_version = c('installed', '*'),
+  r_version = current_r_version()
+) {
   min_version <- match.arg(min_version)
 
   if (missing(path)) {
     path <- tempfile(fileext = '.toml')
   }
 
-  ip <- utils::installed.packages(fields = c('Package', 'Version', 'Priority'))
+  pkg_dirs <- unique(unlist(lapply(.libPaths(), function(lib) {
+    dirs <- list.dirs(lib, recursive = FALSE, full.names = FALSE)
+    dirs[is_valid_package_name(dirs)]
+  })))
 
-  pkg_info <- lapply(seq_len(nrow(ip)), function(i) {
+  pkg_info <- lapply(pkg_dirs, function(pkg) {
+    desc <- tryCatch(
+      utils::packageDescription(
+        pkg,
+        fields = c('Package', 'Version', 'Priority')
+      ),
+      error = function(e) NULL
+    )
+    if (is.null(desc) || isTRUE(is.na(desc))) {
+      return(NULL)
+    }
     list(
-      name = ip[i, 'Package'],
-      version = if (min_version == 'installed') ip[i, 'Version'] else '*'
+      name = desc$Package,
+      version = if (min_version == 'installed') desc$Version else '*',
+      priority = desc$Priority
     )
   })
 
+  pkg_info <- Filter(Negate(is.null), pkg_info)
+
   if (!include_base) {
-    base_pkgs <- rownames(utils::installed.packages(priority = 'base'))
-    pkg_info <- Filter(function(x) !(x$name %in% base_pkgs), pkg_info)
+    pkg_info <- Filter(function(x) !isTRUE(x$priority == 'base'), pkg_info)
   }
 
   deps <- create_dependency_list(pkg_info)
