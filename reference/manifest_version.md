@@ -16,5 +16,5 @@ A character version string.
 
 ``` r
 manifest_version()
-#> [1] "0.0.1"
+#> [1] "0.0.2"
 ```

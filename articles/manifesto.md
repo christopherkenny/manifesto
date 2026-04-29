@@ -66,11 +66,11 @@ manifest_install(manifest_path, dry_run = TRUE)
 ``` r
 path <- manifest_create()
 path
-#> [1] "/tmp/RtmpLTt8WC/file1c00220d60a5.toml"
+#> [1] "/tmp/RtmpAH5def/file1ba31bc2ad8e.toml"
 ```
 
     #> [manifesto]
-    #> version = "0.0.1"
+    #> version = "0.0.2"
     #> 
     #> [project]
     #> name = "Project"
@@ -398,7 +398,7 @@ manifest_from_description(
 ```
 
     #> [manifesto]
-    #> version = "0.0.1"
+    #> version = "0.0.2"
     #> 
     #> [project]
     #> name = "cli"
