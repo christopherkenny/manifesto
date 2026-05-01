@@ -1,6 +1,7 @@
 url: http://christophertkenny.com/manifesto/
 template:
   bootstrap: 5
+  package: ctktemplate
 reference:
 - title: "Basic usage"
   desc: >
