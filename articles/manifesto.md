@@ -74,7 +74,7 @@ manifest_install(manifest_path, dry_run = TRUE)
 
 path <- manifest_create()
 path
-#> [1] "/tmp/RtmpgcxxAd/file1c324da7ed2f.toml"
+#> [1] "/tmp/RtmpBKJ9Im/file1b3c1d2d3cb.toml"
 ```
 
     #> [manifesto]
