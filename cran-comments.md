@@ -7,8 +7,8 @@ This is a resubmission. In this version, I have:
 
 ## Test environments
 
-* local R installation (Windows 11), R 4.5.3
-* local R installation (macOS 11.4), R 4.5.3
+* local R installation (Windows 11), R 4.6.0
+* local R installation (macOS 11.4), R 4.6.0
 * ubuntu-latest (on GitHub Actions), (oldrel-1, devel, and release)
 * windows-latest (on GitHub Actions), (release)
 * macOS-latest (on GitHub Actions), (release)
