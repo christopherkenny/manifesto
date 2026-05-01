@@ -56,6 +56,7 @@ dplyr = ">= 1.0.0"
 You can install the development version of `manifesto` like so:
 
 ``` r
+
 # install.packages('pak')
 pak::pak('christopherkenny/manifesto')
 ```
@@ -73,6 +74,7 @@ packages will be installed, but details of what would be installed are
 printed to the console.
 
 ``` r
+
 library(manifesto)
 
 manifest <- system.file(package = 'manifesto', 'complex.toml')
@@ -90,6 +92,7 @@ manifest_install(path = manifest, dry_run = TRUE)
 `DESCRIPTION` file.
 
 ``` r
+
 manifest <- manifest_from_description(
   system.file(package = 'cli', 'DESCRIPTION')
 )

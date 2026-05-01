@@ -7,6 +7,7 @@ portable. This vignette introduces the core features of `manifesto` and
 demonstrates how to use it in typical R workflows.
 
 ``` r
+
 library(manifesto)
 ```
 
@@ -15,12 +16,14 @@ library(manifesto)
 You can install the stable version of `manifesto` from CRAN:
 
 ``` r
+
 pak::pak('manifesto')
 ```
 
 To install the development version from GitHub:
 
 ``` r
+
 pak::pak('christopherkenny/manifesto')
 ```
 
@@ -31,18 +34,21 @@ For example purposes, we’ll use a manifest file included with the
 directory of the package.
 
 ``` r
+
 manifest_path <- system.file('complex.toml', package = 'manifesto')
 ```
 
 To install all dependencies listed in a TOML manifest:
 
 ``` r
+
 manifest_install(manifest_path)
 ```
 
 To install with optional groups:
 
 ``` r
+
 manifest_install(manifest_path, groups = 'dev')
 manifest_install(manifest_path, groups = c('dev', 'ci'))
 ```
@@ -50,6 +56,7 @@ manifest_install(manifest_path, groups = c('dev', 'ci'))
 To preview what would be installed:
 
 ``` r
+
 manifest_install(manifest_path, dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 3 packages ──
@@ -64,9 +71,10 @@ manifest_install(manifest_path, dry_run = TRUE)
 ### Creating a Minimal Manifest
 
 ``` r
+
 path <- manifest_create()
 path
-#> [1] "/tmp/RtmpAH5def/file1ba31bc2ad8e.toml"
+#> [1] "/tmp/RtmpgcxxAd/file1c324da7ed2f.toml"
 ```
 
     #> [manifesto]
@@ -102,6 +110,7 @@ match with other dependencies.)
 Then run:
 
 ``` r
+
 manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
@@ -138,6 +147,7 @@ testing, or CI. We can do this by passing additional named arguments to
 [`manifest_create()`](http://christophertkenny.com/manifesto/reference/manifest_create.md).
 
 ``` r
+
 manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
@@ -191,6 +201,7 @@ The corresponding call to
 would look like this:
 
 ``` r
+
 manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
@@ -232,6 +243,7 @@ You can also specify a local package path for development or testing
 purposes.
 
 ``` r
+
 manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
@@ -269,6 +281,7 @@ development, CI, and local dependencies.
 You can validate the structure and content of a manifest with:
 
 ``` r
+
 manifest_validate(path = manifest_path)
 ```
 
@@ -292,6 +305,7 @@ to allow for more general use.
 ### 1. Creating a new manifest with common dependencies
 
 ``` r
+
 manifest <- manifest_create(
   path = tempfile(fileext = '.toml'),
   name = 'myproject',
@@ -315,6 +329,7 @@ This creates a manifest for an R project that uses `dplyr` and
 ### 2. Installing core and dev dependencies
 
 ``` r
+
 manifest_install(manifest, groups = 'dev', dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 5 packages ──
@@ -339,6 +354,7 @@ The special group name `all` is reserved to allow a user to install
 everything in the manifest.
 
 ``` r
+
 manifest_install(manifest, groups = 'all', dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 5 packages ──
@@ -390,6 +406,7 @@ Examples:
 ## Converting from DESCRIPTION to Manifest
 
 ``` r
+
 manifest_desc <- tempfile(fileext = '.toml')
 manifest_from_description(
   system.file(package = 'cli', 'DESCRIPTION'),
@@ -452,6 +469,7 @@ This uses fields from the DESCRIPTION file to populate:
 ## Converting from Manifest to DESCRIPTION
 
 ``` r
+
 description_path <- tempfile(pattern = 'DESCRIPTION')
 manifest_to_description(manifest_desc, out = description_path)
 ```
