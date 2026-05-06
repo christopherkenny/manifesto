@@ -5,6 +5,12 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/manifesto)](https://CRAN.R-project.org/package=manifesto)
+[![manifesto status
+badge](https://christopherkenny.r-universe.dev/badges/manifesto)](https://christopherkenny.r-universe.dev/manifesto)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/christopherkenny/manifesto/graph/badge.svg)](https://app.codecov.io/gh/christopherkenny/manifesto)
@@ -63,7 +69,13 @@ dplyr = ">= 1.0.0"
 
 ## Installation
 
-You can install the development version of `manifesto` like so:
+You can install the stable version from CRAN:
+
+``` r
+pak::pak('manifesto')
+```
+
+You can install also development version of `manifesto` like so:
 
 ``` r
 # install.packages('pak')
@@ -90,7 +102,7 @@ manifest_install(path = manifest, dry_run = TRUE)
 #> 
 #> ── Dry run: would install the following 3 packages ──
 #> 
-#> • dplyr@1.2.0
+#> • dplyr@1.2.1
 #> • BiocManager@1.30.27
 #> • readr@2.1.4
 ```
@@ -105,11 +117,11 @@ manifest <- manifest_from_description(
 readLines(manifest) |>
   cat(sep = '\n')
 #> [manifesto]
-#> version = "0.0.1"
+#> version = "0.0.2"
 #> 
 #> [project]
 #> name = "cli"
-#> version = "3.6.5"
+#> version = "3.6.6"
 #> authors = [
 #>     { name = "Gábor Csárdi", email = "gabor@posit.co", roles = ["aut", "cre"] },
 #>     { name = "Hadley Wickham", roles = "ctb" },

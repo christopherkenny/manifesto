@@ -16,6 +16,9 @@ knitr::opts_chunk$set(
 # `manifesto` <img src="man/figures/logo.png" align="right" height="108" alt="" />
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/manifesto)](https://CRAN.R-project.org/package=manifesto)
+[![manifesto status badge](https://christopherkenny.r-universe.dev/badges/manifesto)](https://christopherkenny.r-universe.dev/manifesto)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/christopherkenny/manifesto/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/christopherkenny/manifesto/graph/badge.svg)](https://app.codecov.io/gh/christopherkenny/manifesto)
 <!-- badges: end -->
@@ -67,9 +70,15 @@ dplyr = ">= 1.0.0"
 
 ## Installation
 
-You can install the development version of `manifesto` like so:
+You can install the stable version from CRAN:
 
-``` r
+```r
+pak::pak('manifesto')
+```
+
+You can install also development version of `manifesto` like so:
+
+```r
 # install.packages('pak')
 pak::pak('christopherkenny/manifesto')
 ```
